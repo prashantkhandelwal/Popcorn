@@ -1,0 +1,62 @@
+{
+	"info": {
+		"_postman_id": "d5423669-0caf-4d3c-9146-88356cff1698",
+		"name": "Popcorn",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18172118"
+	},
+	"item": [
+		{
+			"name": "GetMovie - By Name",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ($name: String!){\r\n    movieByName(name: $name) {\r\n    originalTitle\r\n    isAdult\r\n    startYear\r\n    primaryTitle\r\n    titleType\r\n  }\r\n}",
+						"variables": "{\r\n    \"name\": \"Iron Man\"\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7144/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "GetMovie - By IMDBID",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "{\r\n  movie(imdbid: \"tt0012295\") {\r\n    originalTitle\r\n    isAdult\r\n    startYear\r\n    primaryTitle\r\n  }\r\n}\r\n",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7144/graphql",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7144",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
