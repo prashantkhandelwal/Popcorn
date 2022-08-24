@@ -1,5 +1,6 @@
 using Popcorn.Repositories;
 using Popcorn.Queries;
+using HotChocolate.AspNetCore.Voyager;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,5 +22,12 @@ if(app.Environment.IsDevelopment())
 app.UseRouting();
 
 app.MapGraphQL();
+
+app.UseVoyager(new VoyagerOptions
+{
+    Path = "/voyager",
+    QueryPath = "/graphql"
+});
+
 
 app.Run();
