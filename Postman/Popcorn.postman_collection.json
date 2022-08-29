@@ -14,17 +14,17 @@
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "query ($name: String!){\r\n    movieByName(name: $name) {\r\n    originalTitle\r\n    isAdult\r\n    startYear\r\n    primaryTitle\r\n    titleType\r\n  }\r\n}",
+						"query": "query ($name: String!) {\r\n  movieByName(name: $name) {\r\n    id\r\n    imdbid\r\n    originaltitle\r\n    overview\r\n    popularity\r\n    productioncompanies {\r\n        name\r\n    }\r\n  }\r\n}\r\n",
 						"variables": "{\r\n    \"name\": \"Iron Man\"\r\n}"
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7144/graphql",
+					"raw": "https://localhost:7098/graphql",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "7144",
+					"port": "7098",
 					"path": [
 						"graphql"
 					]
@@ -33,24 +33,24 @@
 			"response": []
 		},
 		{
-			"name": "GetMovie - By IMDBID",
+			"name": "GetMovie - By TMDBID",
 			"request": {
 				"method": "POST",
 				"header": [],
 				"body": {
 					"mode": "graphql",
 					"graphql": {
-						"query": "{\r\n  movie(imdbid: \"tt0012295\") {\r\n    originalTitle\r\n    isAdult\r\n    startYear\r\n    primaryTitle\r\n  }\r\n}\r\n",
+						"query": "{\r\n  movie(id: 897) {\r\n    title\r\n    originaltitle\r\n    originallanguage\r\n    overview\r\n    tagline\r\n    runtime\r\n    releasedate\r\n    homepage\r\n    poster\r\n    backdrop\r\n     genres{\r\n       name\r\n    }\r\n    productioncompanies{\r\n      name\r\n      origincountry\r\n    }\r\n    productioncountries{\r\n      name\r\n    }\r\n    spokenlanguages{\r\n      name\r\n      language\r\n      languagecode\r\n    }\r\n    budget\r\n    revenue\r\n    status\r\n    popularity\r\n    votecount\r\n    voteaverage\r\n    imdbid\r\n    isadult\r\n    video\r\n  }\r\n}\r\n",
 						"variables": ""
 					}
 				},
 				"url": {
-					"raw": "https://localhost:7144/graphql",
+					"raw": "https://localhost:7098/graphql",
 					"protocol": "https",
 					"host": [
 						"localhost"
 					],
-					"port": "7144",
+					"port": "7098",
 					"path": [
 						"graphql"
 					]

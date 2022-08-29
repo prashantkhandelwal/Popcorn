@@ -22,9 +22,9 @@ namespace Popcorn.Queries
         // db.system.profile.find().pretty()
 
         [UseProjection]
-        public async Task<IExecutable<Movie>> GetMovie(string imdbid)
+        public async Task<IExecutable<Movie>> GetMovie(int id)
         {
-            var movie = await _moviesRepository.GetMovieById(imdbid).ConfigureAwait(false);
+            var movie = await _moviesRepository.GetMovieById(id).ConfigureAwait(false);
             return movie;
         }
 

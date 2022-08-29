@@ -2,8 +2,8 @@
 
 namespace Popcorn.Models
 {
-    [BsonDiscriminator("movies")]
-    public class Movie
+    [BsonDiscriminator("imdbmovies")]
+    public class IMDBMovie
     {
         private bool _isAdult;
 
