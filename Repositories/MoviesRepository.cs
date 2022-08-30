@@ -18,20 +18,9 @@ namespace Popcorn.Repositories
             _collection = _database.GetCollection<Movie>("movies");
         }
 
-        public async Task<IExecutable<Movie>> GetMovieById(int TMDBId)
+        public async Task<IExecutable<Movie>> SearchMovies()
         {
-            return await Task.FromResult(_collection.Find(m => m.TMDBId == TMDBId).AsExecutable()).ConfigureAwait(false);
-        }
-
-        public async Task<IExecutable<Movie>> GetMovieByName(string Name)
-        {
-            //var builder = Builders<Movie>.Filter;
-            //var filter = builder.Eq("original_title", Name) & builder.Eq("title", Name);
-            // https://stackoverflow.com/questions/33058061/c-sharp-mongodb-case-sensitive-search
-
-            return await Task.FromResult(_collection
-                .Find(m => m.OriginalTitle.ToLowerInvariant() == Name.ToLowerInvariant() || m.Title.ToLowerInvariant() == Name.ToLowerInvariant())
-                .AsExecutable()).ConfigureAwait(false);
+            return await Task.FromResult(_collection.AsExecutable()).ConfigureAwait(false);
         }
     }
 }

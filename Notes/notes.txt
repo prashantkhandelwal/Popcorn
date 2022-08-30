@@ -1,0 +1,42 @@
+﻿// Old code - may re-use
+
+        //[UseProjection]
+        //public async Task<IExecutable<Movie>> GetMovie(int id)
+        //{
+        //    var movie = await _moviesRepository.GetMovieById(id).ConfigureAwait(false);
+        //    return movie;
+        //}
+
+        //[UseProjection]
+        //public async Task<IExecutable<Movie>> Search(string name)
+        //{
+        //    var movie = await _moviesRepository.GetMovieByName(name).ConfigureAwait(false);
+        //    return movie;
+        //}
+
+
+        //public async Task<IExecutable<Movie>> GetMovieById(int TMDBId)
+        //{
+        //    return await Task.FromResult(_collection.Find(m => m.TMDBId == TMDBId).AsExecutable()).ConfigureAwait(false);
+        //}
+
+        //public async Task<IExecutable<Movie>> GetMovieByName(string Name)
+        //{
+        //    //var builder = Builders<Movie>.Filter;
+        //    //var filter = builder.Eq("original_title", Name) & builder.Eq("title", Name);
+        //    // https://stackoverflow.com/questions/33058061/c-sharp-mongodb-case-sensitive-search
+
+        //    return await Task.FromResult(_collection
+        //        .Find(m => m.OriginalTitle.ToLowerInvariant().Contains(Name.ToLowerInvariant()) || m.Title.ToLowerInvariant().Contains(Name.ToLowerInvariant()))
+        //        .AsExecutable())
+        //        .ConfigureAwait(false);
+        //}
+
+        //public async Task<IExecutable<Movie>> GetMovieByName(string Name, string SortField, SortDirection direction)
+        //{
+        //    var sort = (direction == SortDirection.Descending ? Builders<Movie>.Sort.Descending(SortField): Builders<Movie>.Sort.Ascending(SortField));
+
+        //    return await Task.FromResult(_collection
+        //        .Find(m => m.OriginalTitle.ToLowerInvariant().Contains(Name.ToLowerInvariant()) || m.Title.ToLowerInvariant().Contains(Name.ToLowerInvariant())).Sort(sort)
+        //        .AsExecutable()).ConfigureAwait(false);
+        //}

@@ -20,19 +20,13 @@ namespace Popcorn.Queries
         // db.setLogLevel(1)
         // db.setProfilingLevel(2)
         // db.system.profile.find().pretty()
+        // db.adminCommand( { getLog:'global'} ).log.forEach(x => {print(x)})
 
         [UseProjection]
-        public async Task<IExecutable<Movie>> GetMovie(int id)
+        [UseFiltering]
+        public async Task<IExecutable<Movie>> GetMovies()
         {
-            var movie = await _moviesRepository.GetMovieById(id).ConfigureAwait(false);
-            return movie;
-        }
-
-        [UseProjection]
-        public async Task<IExecutable<Movie>> GetMovieByName(string name)
-        {
-            var movie = await _moviesRepository.GetMovieByName(name).ConfigureAwait(false);
-            return movie;
+            return await _moviesRepository.SearchMovies().ConfigureAwait(false);
         }
     }
 }

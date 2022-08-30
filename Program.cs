@@ -8,13 +8,14 @@ builder.Services.AddRouting();
 builder.Services.AddTransient<IMoviesRepository, MoviesRepository>();
 builder.Services.AddGraphQLServer()
     .AddQueryType<MoviesQuery>()
-    .AddMongoDbProjections();
+    .AddMongoDbProjections()
+    .AddMongoDbFiltering();
 
 var app = builder.Build();
 
 //app.MapGet("/", () => "Hello World!");
 
-if(app.Environment.IsDevelopment())
+if (app.Environment.IsDevelopment())
 {
     // Do something when debugging.
 }

@@ -1,4 +1,5 @@
-﻿using MongoDB.Bson;
+﻿using HotChocolate.Data;
+using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Popcorn.Models
@@ -9,7 +10,7 @@ namespace Popcorn.Models
     {
         [GraphQLType(typeof(Guid))]
         [BsonId]
-        public ObjectId _id { get; set; }
+        public object _id { get; set; }
 
         [BsonElement("id")]
         [GraphQLName("id")]
@@ -109,6 +110,7 @@ namespace Popcorn.Models
 
     }
 
+    [BsonIgnoreExtraElements]
     public class Genres
     {
         [BsonElement("name")]
@@ -116,6 +118,7 @@ namespace Popcorn.Models
         public string Name { get; set; }
     }
 
+    [BsonIgnoreExtraElements]
     public class ProductionCompanies
     {
         [BsonElement("logo_path")]
@@ -131,6 +134,7 @@ namespace Popcorn.Models
         public string? OriginCountry { get; set; }
     }
 
+    [BsonIgnoreExtraElements]
     public class ProductionCountries
     {
         [BsonElement("iso_3166_1")]
@@ -142,6 +146,7 @@ namespace Popcorn.Models
         public string Name { get; set; }
     }
 
+    [BsonIgnoreExtraElements]
     public class SpokenLanguages
     {
         [BsonElement("english_name")]
@@ -157,6 +162,7 @@ namespace Popcorn.Models
         public string Name { get; set; }
     }
 
+    [BsonIgnoreExtraElements]
     public class BelongsToCollection
     {
         [BsonElement("id")]
