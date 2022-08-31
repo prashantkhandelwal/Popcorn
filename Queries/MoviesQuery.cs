@@ -1,4 +1,5 @@
 ﻿using HotChocolate.Data;
+using MongoDB.Bson;
 using Popcorn.Models;
 using Popcorn.Repositories;
 
@@ -24,9 +25,14 @@ namespace Popcorn.Queries
 
         [UseProjection]
         [UseFiltering]
-        public async Task<IExecutable<Movie>> GetMovies()
+        public async Task<IExecutable<Movie>> GetMovies(string moviename="")
         {
-            return await _moviesRepository.SearchMovies().ConfigureAwait(false);
+            return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
         }
+
+        //public async Task<IExecutable<BsonDocument>> GetMoviesByDirector(string directorname)
+        //{
+        //    return await _moviesRepository.GetMoviesByDirector(directorname);
+        //}
     }
 }

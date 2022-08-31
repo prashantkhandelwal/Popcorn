@@ -1,6 +1,7 @@
 ﻿using HotChocolate.Data;
 using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
+using Popcorn.Repositories;
 
 namespace Popcorn.Models
 {
@@ -181,5 +182,20 @@ namespace Popcorn.Models
         [GraphQLName("poster")]
         public string? Poster { get; set; }
     }
+
+
+    //public class MovieTypeExtension : ObjectTypeExtension
+    //{
+    //    protected override void Configure(IObjectTypeDescriptor descriptor)
+    //    {
+    //        descriptor.Name("Movies");
+
+    //        descriptor.Field("GetCredits")
+    //            .ResolveWith<CreditsResolver>(_ => _.GetCredits())
+    //            .Type<StringType>()
+    //            .Name("Credits");
+
+    //    }
+    //}
 
 }

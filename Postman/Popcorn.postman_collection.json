@@ -57,6 +57,33 @@
 				}
 			},
 			"response": []
+		},
+		{
+			"name": "Search Movie",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query GetMovies($id: Int!) {\r\n  movies(where: { id: { eq: $id } }) {\r\n    id\r\n    title\r\n    overview\r\n    originallanguage\r\n    productioncompanies {\r\n      name\r\n      origincountry\r\n    }\r\n    credits {\r\n      cast {\r\n        name\r\n        character\r\n      }\r\n      crew {\r\n        name\r\n        job\r\n      }\r\n    }\r\n  }\r\n}\r\n",
+						"variables": "{\r\n    \"id\": 857\r\n}"
+					}
+				},
+				"url": {
+					"raw": "https://localhost:7098/graphql/",
+					"protocol": "https",
+					"host": [
+						"localhost"
+					],
+					"port": "7098",
+					"path": [
+						"graphql",
+						""
+					]
+				}
+			},
+			"response": []
 		}
 	]
 }

@@ -1,6 +1,7 @@
 using Popcorn.Repositories;
 using Popcorn.Queries;
 using HotChocolate.AspNetCore.Voyager;
+using Popcorn.Queries.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,12 +9,11 @@ builder.Services.AddRouting();
 builder.Services.AddTransient<IMoviesRepository, MoviesRepository>();
 builder.Services.AddGraphQLServer()
     .AddQueryType<MoviesQuery>()
+    .AddTypeExtension<MovieCreditsExtension>()
     .AddMongoDbProjections()
     .AddMongoDbFiltering();
 
 var app = builder.Build();
-
-//app.MapGet("/", () => "Hello World!");
 
 if (app.Environment.IsDevelopment())
 {
