@@ -1,0 +1,73 @@
+# Get all movies by director
+
+query ($name: String!) {
+  moviesByDirector (directorname: $name ){
+    movies
+    {
+      title
+    }
+  }
+}
+
+vars;
+{
+  "name": "steven spielberg"
+}
+
+###########################################
+
+# Get Movies by name - Approach 1
+
+query ($name: String!) {
+  movies (moviename: $name ){
+    id
+    originaltitle
+    title
+    overview
+    credits{
+      cast{
+        name
+      }
+    }
+  }
+}
+
+vars;
+{
+  "name": "iron"
+}
+
+###########################################
+
+# Get Movies by name - Approach 2
+
+query GetMovies($name: String!) {
+  movies(where: { title: { eq: $name } }) {
+    id
+    title
+    overview
+    originallanguage
+    productioncompanies {
+      name
+      origincountry
+    }
+    credits {
+      cast {
+        name
+        character
+      }
+      crew {
+        name
+        job
+      }
+    }
+  }
+}
+
+
+vars;
+{
+  "name": "Iron Man"
+}
+
+###########################################

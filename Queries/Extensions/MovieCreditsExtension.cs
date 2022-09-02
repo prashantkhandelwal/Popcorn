@@ -10,6 +10,6 @@ namespace Popcorn.Queries.Extensions
         public async Task<IExecutable<Credits>> GetCredits([Parent]Movie movie, [Service] IMoviesRepository _movies)
         {
             return await _movies.GetCredits(movie.TMDBId).ConfigureAwait(false);
-        }
+        }   
     }
 }

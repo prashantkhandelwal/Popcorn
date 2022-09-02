@@ -30,9 +30,9 @@ namespace Popcorn.Queries
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
         }
 
-        //public async Task<IExecutable<BsonDocument>> GetMoviesByDirector(string directorname)
-        //{
-        //    return await _moviesRepository.GetMoviesByDirector(directorname);
-        //}
+        public async Task<IExecutable<Credits>> GetMoviesByDirector(string directorname)
+        {
+            return await _moviesRepository.GetMoviesDirectedBy(directorname);
+        }
     }
 }

@@ -10,6 +10,7 @@ builder.Services.AddTransient<IMoviesRepository, MoviesRepository>();
 builder.Services.AddGraphQLServer()
     .AddQueryType<MoviesQuery>()
     .AddTypeExtension<MovieCreditsExtension>()
+    .AddTypeExtension<CreditsMovieExtension>()
     .AddMongoDbProjections()
     .AddMongoDbFiltering();
 

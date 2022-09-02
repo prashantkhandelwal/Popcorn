@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Data;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 using Newtonsoft.Json;
 using Popcorn.Models;
@@ -26,11 +27,20 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
-        public async Task<IExecutable<Movie>> SearchMovies(string MovieName="")
+        public async Task<IExecutable<Movie>> GetMoviesById(int MovieId)
+        {
+            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
+            return await Task.FromResult(_collection.Find(c => c.TMDBId == MovieId)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
+
+
+        public async Task<IExecutable<Movie>> SearchMovies(string MovieName = "")
         {
             IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
 
-            if(string.IsNullOrEmpty(MovieName))
+            if (string.IsNullOrEmpty(MovieName))
             {
                 return _collection.AsExecutable();
             }
@@ -41,9 +51,35 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
-        //public async Task<IExecutable<Movie>> GetMoviesByDirector(string DirectorName)
+
+        public async Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName)
+        {
+            IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
+            
+            var filter = Builders<Credits>
+                .Filter
+                .ElemMatch(
+                e => e.Crew,
+                e => e.Job == "Director" &&
+                e.Name.ToLowerInvariant() == DirectorName.ToLowerInvariant());
+
+            return await Task.FromResult(
+                _collection.Find(filter)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
+
+
+
+        #region Other Implementations
+
+        // Below code can also be used to get the movies by director name
+        // This approach is naive and much slower and quesry execution takes time.
+        // The above implementation is recommended and is much faster coparatively.
+
+        //public async Task<List<Movie>> GetMoviesDirectedBy(string DirectorName)
         //{
-        //    IMongoCollection<Credits> _collection2 = _database.GetCollection<Credits>("credits");
+        //    IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
 
         //    var filter = Builders<Credits>
         //        .Filter
@@ -52,78 +88,24 @@ namespace Popcorn.Repositories
         //        e => e.Job == "Director" &&
         //        e.Name.ToLowerInvariant() == DirectorName.ToLowerInvariant());
 
-        //    return await Task.FromResult(_collection2.Aggregate()
+        //    var result = await _collection.Aggregate(options: new AggregateOptions { Comment = "DirectorMovies"})
         //        .Match(filter)
         //        .Lookup("movies", "id", "id", "movies")
-        //        .Project("{'allmovies.title': 1, '_id': 0}")
-        //        .AsExecutable()).ConfigureAwait(false);
+        //        .Project("{'movies': 1, '_id': 0}")
+        //        .ToListAsync()
+        //        .ConfigureAwait(false);
+
+        //    List<Movie> allMovies = new List<Movie>();
+        //    Movie movie = new Movie();
+
+        //    foreach (var item in result)
+        //    {
+        //        movie = BsonSerializer.Deserialize<Movie>(item[0][0].AsBsonDocument);
+        //        allMovies.Add(movie);
+        //    }
+        //    return allMovies;
         //}
 
-            //    IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
-            //    //IMongoCollection<Movie> _collection2 = _database.GetCollection<Movie>("movies");
-
-            //    //var filter = Builders<Credits>.Filter.Eq(x => x.Crew.Where(c => c.Name == DirectorName.ToLowerInvariant()).Count(), 0);
-
-            //    BsonDocument pipelineStage1 = new BsonDocument
-            //    {
-            //        {
-            //            "$match", new BsonDocument
-            //            {
-            //                {"crew.name", DirectorName }
-            //            }
-            //        }
-            //    };
-
-            //    BsonDocument[] pipeline = new BsonDocument[] { pipelineStage1 };
-
-            //    List<BsonDocument> results = _collection.Aggregate<BsonDocument>(pipeline).ToList();
-
-
-            //    return await Task.FromResult(results);
-
-            //return await Task.FromResult(_collection.Aggregate()
-            //    .Match(filter)
-            //    .Lookup<Credits, Movie, Movie>(
-            //        _collection2,
-            //        localField => localField.Id,
-            //        foreignField => foreignField.TMDBId,
-            //        output => output.Title).AsExecutable()).ConfigureAwait(false);
-
-
-
-            /*//var filter = Builders<Credits>
-            //    .Filter
-            //    .ElemMatch(
-            //    e => e.Crew,
-            //    e => e.Job == "Director" &&
-            //    e.Name.ToLowerInvariant() == DirectorName.ToLowerInvariant());
-
-            var result = _collection.Aggregate()
-                .Lookup(foreignCollectionName: "movies",
-                localField: "id",
-                foreignField: "id",
-                @as: "allmovies")
-                .Unwind("allmovies")
-                .Match(new BsonDocument()
-                {
-                    {
-                        "$expr", new BsonDocument()
-                        {
-                            {
-                                "$and", new BsonArray()
-                                {
-                                    new BsonDocument() {{ "$eq", new BsonArray(){"$crew.name", DirectorName.ToLowerInvariant() } } },
-                                    new BsonDocument() {{ "$eq", new BsonArray(){"$crew.job", "director" }},
-                                } 
-                                }
-                            }
-                        }
-                    }
-
-                });
-
-            return await Task.FromResult(result.AsExecutable()).ConfigureAwait(false);*/
-            //}
-            //}
-        }
+        #endregion
+    }
 }
