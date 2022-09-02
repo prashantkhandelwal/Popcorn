@@ -1,7 +1,5 @@
-﻿using HotChocolate.Data;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
-using Popcorn.Repositories;
 
 namespace Popcorn.Models
 {

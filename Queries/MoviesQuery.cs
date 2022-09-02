@@ -30,6 +30,7 @@ namespace Popcorn.Queries
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
         }
 
+        [UseProjection]
         public async Task<IExecutable<Credits>> GetMoviesByDirector(string directorname)
         {
             return await _moviesRepository.GetMoviesDirectedBy(directorname);

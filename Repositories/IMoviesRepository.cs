@@ -1,6 +1,4 @@
-﻿using MongoDB.Bson;
-using MongoDB.Driver;
-using Popcorn.Models;
+﻿using Popcorn.Models;
 
 namespace Popcorn.Repositories
 {
@@ -10,11 +8,8 @@ namespace Popcorn.Repositories
 
         Task<IExecutable<Credits>> GetCredits(int MovieId);
 
-        Task<IExecutable<Movie>> GetMoviesById(int MovieId);
-
         Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName);
 
-        //Task<IExecutable<BsonDocument>> GetMoviesByDirector(string DirectorName);
-
+        Task<IExecutable<Movie>> GetMoviesById(int MovieId);
     }
 }

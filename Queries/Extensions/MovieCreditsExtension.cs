@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using Popcorn.Models;
+﻿using Popcorn.Models;
 using Popcorn.Repositories;
 
 namespace Popcorn.Queries.Extensions
