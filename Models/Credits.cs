@@ -48,7 +48,7 @@ namespace Popcorn.Models
 
         [BsonElement("character")]
         [GraphQLName("character")]
-        public string Character { get; set; }
+        public string? Character { get; set; }
 
         [BsonElement("name")]
         [GraphQLName("name")]
