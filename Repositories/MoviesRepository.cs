@@ -52,13 +52,30 @@ namespace Popcorn.Repositories
         public async Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName)
         {
             IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
-            
+
             var filter = Builders<Credits>
                 .Filter
                 .ElemMatch(
                 e => e.Crew,
                 e => e.Job == "Director" &&
                 e.Name.ToLowerInvariant() == DirectorName.ToLowerInvariant());
+
+            return await Task.FromResult(
+                _collection.Find(filter)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
+
+        // TODO: Make this function more extensible so that the user can pass multiple arguments.
+        public async Task<IExecutable<Movie>> GetMoviesByGenre(string GenreName)
+        {
+            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
+
+            var filter = Builders<Movie>
+                .Filter
+                .ElemMatch(
+                 e => e.Genres,
+                 e => e.Name.ToLowerInvariant() == GenreName.ToLowerInvariant());
 
             return await Task.FromResult(
                 _collection.Find(filter)

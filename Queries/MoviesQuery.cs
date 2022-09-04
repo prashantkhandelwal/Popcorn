@@ -35,5 +35,11 @@ namespace Popcorn.Queries
         {
             return await _moviesRepository.GetMoviesDirectedBy(directorname);
         }
+
+        [UseProjection]
+        public async Task<IExecutable<Movie>> GetMoviesByGenre(string genrename)
+        {
+            return await _moviesRepository.GetMoviesByGenre(genrename);
+        }
     }
 }
