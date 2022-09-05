@@ -12,7 +12,8 @@ builder.Services.AddGraphQLServer()
     .AddTypeExtension<MovieCreditsExtension>()
     .AddTypeExtension<CreditsMovieExtension>()
     .AddMongoDbProjections()
-    .AddMongoDbFiltering();
+    .AddMongoDbFiltering()
+    .AddMongoDbSorting();
 
 var app = builder.Build();
 

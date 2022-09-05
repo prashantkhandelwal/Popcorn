@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Data;
 using Popcorn.Models;
+using Popcorn.Queries.SortTypes;
 using Popcorn.Repositories;
 
 namespace Popcorn.Queries
@@ -24,6 +25,7 @@ namespace Popcorn.Queries
 
         [UseProjection]
         [UseFiltering]
+        [UseSorting(typeof(PopularitySortType))]
         public async Task<IExecutable<Movie>> GetMovies(string moviename="")
         {
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
