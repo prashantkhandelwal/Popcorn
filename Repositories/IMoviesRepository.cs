@@ -10,7 +10,7 @@ namespace Popcorn.Repositories
 
         Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName);
 
-        Task<IExecutable<Movie>> GetMoviesByGenre(string GenreName);
+        Task<IExecutable<Movie>> GetMoviesByGenre();
 
         Task<IExecutable<Movie>> GetMoviesById(int MovieId);
     }

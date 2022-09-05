@@ -16,9 +16,16 @@ namespace Popcorn.Repositories
             _database = _client.GetDatabase("moviedb");
         }
 
-        public async Task<IExecutable<Credits>> GetCredits(int MovieId)
+        public async Task<IExecutable<Credits>> GetCredits(int MovieId = 0)
         {
             IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
+            if (MovieId == 0)
+            {
+                return await Task.FromResult(_collection
+                    .AsExecutable())
+                    .ConfigureAwait(false);
+            }
+
             return await Task.FromResult(_collection.Find(c => c.Id == MovieId)
                 .AsExecutable())
                 .ConfigureAwait(false);
@@ -66,26 +73,60 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
-        // TODO: Make this function more extensible so that the user can pass multiple arguments.
-        public async Task<IExecutable<Movie>> GetMoviesByGenre(string GenreName)
+        public async Task<IExecutable<Movie>> GetMoviesByGenre()
         {
             IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
-
-            var filter = Builders<Movie>
-                .Filter
-                .ElemMatch(
-                 e => e.Genres,
-                 e => e.Name.ToLowerInvariant() == GenreName.ToLowerInvariant());
-
             return await Task.FromResult(
-                _collection.Find(filter)
+                _collection
                 .AsExecutable())
                 .ConfigureAwait(false);
         }
 
 
-
         #region Other Implementations
+
+
+        // Below code can be used to get the movies based on the name passed as an argument
+        // Commented this out as the HotChocolate filter function is taking care of filtering.
+        // HotChocolate search is case-sensitive.
+        //
+        // If you use the below code, then the GraphQL query will be
+        // query ($name: [String!]!) {
+        //    moviesByGenre(genrename: $name) {
+        //    id
+        //    title
+        //   }
+        // }
+        //
+        //
+        // Variables:
+        //  {
+        //    "name": ["Crime", "Adventure"]
+        //  }
+        public async Task<IExecutable<Movie>> GetMoviesByGenre(string[] GenreNames)
+        {
+            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
+
+
+
+            //var filter = Builders<Movie>
+            //    .Filter
+            //    .ElemMatch(
+            //     e => e.Genres,
+            //     e => e.Name.ToLowerInvariant() == GenreName.ToLowerInvariant());
+
+            var filter = Builders<Genres>
+                        .Filter
+                        .In(
+                         e => e.Name, GenreNames);
+
+            var moviesbygenre = Builders<Movie>.Filter.ElemMatch(t => t.Genres, filter);
+
+            return await Task.FromResult(
+                _collection.Find(moviesbygenre)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
 
         // Below code can also be used to get the movies by director name
         // This approach is naive and much slower and quesry execution takes time.

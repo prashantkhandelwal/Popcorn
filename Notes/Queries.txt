@@ -1,9 +1,9 @@
 # Get all movies by director
 
 query ($name: String!) {
-  moviesByDirector (directorname: $name ){
-    movies
-    {
+  moviesByDirector(directorname: $name) {
+    id
+    movies {
       title
     }
   }
@@ -71,3 +71,54 @@ vars;
 }
 
 ###########################################
+
+Get Movies by Genre
+
+query {
+  moviesByGenre(where: { genres: { some: { name: { eq: "Crime" } } } }) {
+    id
+    title
+  }
+}
+
+############################################
+
+Get Movies by Genres passed as params
+
+query ($name: [String!]!) {
+moviesByGenre(genrename: $name) {
+  id
+    title
+  }
+}
+
+
+{
+  "name": ["Crime", "Adventure"]
+}
+
+#############################################
+
+Get mMvies by multiple genres
+
+query {
+  movies(
+    where: {
+      and: [
+        { genres: { some: { name: { eq: "Science Fiction" } } } }
+        { genres: { some: { name: { eq: "Adventure" } } } }
+      ]
+    }
+  ) {
+    id
+    originaltitle
+    title
+    overview
+    credits{
+      cast{
+        character
+        name
+      }
+    }
+  }
+}

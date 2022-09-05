@@ -1,5 +1,4 @@
 ﻿using HotChocolate.Data;
-using MongoDB.Bson;
 using Popcorn.Models;
 using Popcorn.Repositories;
 
@@ -37,9 +36,10 @@ namespace Popcorn.Queries
         }
 
         [UseProjection]
-        public async Task<IExecutable<Movie>> GetMoviesByGenre(string genrename)
+        [UseFiltering]
+        public async Task<IExecutable<Movie>> GetMoviesByGenre()
         {
-            return await _moviesRepository.GetMoviesByGenre(genrename);
+            return await _moviesRepository.GetMoviesByGenre();
         }
     }
 }
