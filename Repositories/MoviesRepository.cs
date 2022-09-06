@@ -8,12 +8,37 @@ namespace Popcorn.Repositories
     {
         private IMongoClient _client;
         private IMongoDatabase _database;
-        //private IMongoCollection<BsonDocument>? _collection;
 
         public MoviesRepository()
         {
             _client = new MongoClient("mongodb://127.0.0.1");
             _database = _client.GetDatabase("moviedb");
+        }
+
+        public async Task<IExecutable<Movie>> GetMoviesById(int MovieId)
+        {
+            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
+            return await Task.FromResult(_collection.Find(c => c.TMDBId == MovieId)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
+
+        public async Task<IExecutable<Movie>> SearchMovies(string MovieName = "")
+        {
+            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
+
+            if (string.IsNullOrEmpty(MovieName))
+            {
+                return await Task.FromResult(
+                _collection
+                .AsExecutable())
+                .ConfigureAwait(false);
+            }
+
+            return await Task.FromResult(
+                _collection.Find(m => m.Title.ToLowerInvariant().Contains(MovieName.ToLowerInvariant()))
+                .AsExecutable())
+                .ConfigureAwait(false);
         }
 
         public async Task<IExecutable<Credits>> GetCredits(int MovieId = 0)
@@ -31,31 +56,6 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
-        public async Task<IExecutable<Movie>> GetMoviesById(int MovieId)
-        {
-            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
-            return await Task.FromResult(_collection.Find(c => c.TMDBId == MovieId)
-                .AsExecutable())
-                .ConfigureAwait(false);
-        }
-
-
-        public async Task<IExecutable<Movie>> SearchMovies(string MovieName = "")
-        {
-            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
-
-            if (string.IsNullOrEmpty(MovieName))
-            {
-                return _collection.AsExecutable();
-            }
-
-            return await Task.FromResult(
-                _collection.Find(m => m.Title.ToLowerInvariant().Contains(MovieName.ToLowerInvariant()))
-                .AsExecutable())
-                .ConfigureAwait(false);
-        }
-
-
         public async Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName)
         {
             IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
@@ -72,16 +72,6 @@ namespace Popcorn.Repositories
                 .AsExecutable())
                 .ConfigureAwait(false);
         }
-
-        public async Task<IExecutable<Movie>> GetMoviesByGenre()
-        {
-            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
-            return await Task.FromResult(
-                _collection
-                .AsExecutable())
-                .ConfigureAwait(false);
-        }
-
 
         #region Other Implementations
 

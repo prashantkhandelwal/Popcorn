@@ -26,7 +26,7 @@ namespace Popcorn.Queries
         [UseProjection]
         [UseFiltering]
         [UseSorting(typeof(PopularitySortType))]
-        public async Task<IExecutable<Movie>> GetMovies(string moviename="")
+        public async Task<IExecutable<Movie>> SearchMovies(string moviename="")
         {
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
         }
@@ -37,11 +37,12 @@ namespace Popcorn.Queries
             return await _moviesRepository.GetMoviesDirectedBy(directorname);
         }
 
-        [UseProjection]
-        [UseFiltering]
-        public async Task<IExecutable<Movie>> GetMoviesByGenre()
-        {
-            return await _moviesRepository.GetMoviesByGenre();
-        }
+        //TODO: Remove after testing.
+        //[UseProjection]
+        //[UseFiltering]
+        //public async Task<IExecutable<Movie>> SearchMovies()
+        //{
+        //    return await _moviesRepository.SearchMovies("");
+        //}
     }
 }
