@@ -23,6 +23,7 @@ namespace Popcorn.Queries
         // db.system.profile.find().pretty()
         // db.adminCommand( { getLog:'global'} ).log.forEach(x => {print(x)})
 
+        [UsePaging(MaxPageSize = 50)]
         [UseProjection]
         [UseFiltering]
         [UseSorting(typeof(PopularitySortType))]

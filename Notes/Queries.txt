@@ -1,3 +1,9 @@
+# Note that not all the queries will work properly.
+# Some of the queries were built with different approach and later on removed when there was a performance hit.
+# All queries are stored here for reference purpose.
+
+
+
 # Get all movies by director
 
 query ($name: String!) {
@@ -97,12 +103,12 @@ moviesByGenre(genrename: $name) {
   "name": ["Crime", "Adventure"]
 }
 
-#############################################
+######################################################
 
-Get mMvies by multiple genres
+Get movies by multiple genres - Query will time-out as there are lot of records
 
 query {
-  movies(
+  searchMovies (
     where: {
       and: [
         { genres: { some: { name: { eq: "Science Fiction" } } } }
@@ -122,3 +128,84 @@ query {
     }
   }
 }
+
+#######################################################
+
+Search movies on the basis of Genre in the order of popularity
+
+query {
+  searchMovies (
+    where: {
+      and: [
+        { genres: { some: { name: { eq: "Science Fiction" } } } },
+        { genres: { some: { name: { eq: "Adventure" } } } },
+      ]
+    }, order: {popularity:DESC}
+  ) {
+    id
+    originaltitle
+    title
+    overview
+    popularity
+  }
+}
+
+########################################################
+
+Return top 10 movies on the basis of Genre order by popularity
+
+query {
+  searchMovies(first: 10 where: {
+      and: [
+        { genres: { some: { name: { eq: "Science Fiction" } } } },
+        { genres: { some: { name: { eq: "Adventure" } } } },
+      ]
+    }, order: {popularity:DESC}) {
+    edges {
+      node {
+        id
+        title
+        overview
+        releasedate
+        popularity
+      }
+    }
+  }
+}
+
+########################################################
+
+Return top 10 movies on the basis of Genre order by popularity.
+The query uses cursor for paging purpose. Client can read the 
+response from the pageInfo object and perform the paging.
+
+No server-side configuration was needed in this case.
+
+
+query {
+  searchMovies(first: 10 where: {
+      and: [
+        { genres: { some: { name: { eq: "Science Fiction" } } } },
+        { genres: { some: { name: { eq: "Adventure" } } } },
+      ]
+    }, order: {popularity:DESC}) {
+    edges {
+      node {
+        id
+        title
+        overview
+        releasedate
+        popularity
+      }
+      cursor
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+      startCursor
+      endCursor
+    }
+  }
+}
+
+########################################################
