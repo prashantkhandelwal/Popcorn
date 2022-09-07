@@ -14,38 +14,55 @@ namespace Popcorn.Models
 
         [BsonElement("id")]
         [GraphQLName("id")]
+        [GraphQLDescription("TMDB Movie Id. This is the unique ID for movies listed in TheMovieDB.org. The ID is in integer format.")]
         public int TMDBId { get; set; }
 
         [BsonElement("imdb_id")]
         [GraphQLName("imdbid")]
+        [GraphQLDescription("IMDB Movie Id. This is the unique ID for movies listed in IMDB.com. The ID is in string format. E.g.: tt0076759")]
         public string IMDBId { get; set; }
 
         [BsonElement("title")]
         [GraphQLName("title")]
+        [GraphQLDescription("TMDB Movie Title.")]
         public string Title { get; set; }
+
+        [BsonElement("belongs_to_collection")]
+        [GraphQLName("belongstocollection")]
+        [GraphQLDescription("Collection name which this movie belongs to. Refer to \"BelongsToCollection\" schema.")]
+        public BelongsToCollection BelongsToCollection { get; set; }
 
         [BsonElement("original_title")]
         [GraphQLName("originaltitle")]
+        [GraphQLDescription("TMDB Original Movie Title. Also refer to \"AlternativeTitles\" schema.")]
         public string OriginalTitle { get; set; }
 
         [BsonElement("original_language")]
         [GraphQLName("originallanguage")]
+        [GraphQLDescription(
+            "TMDB Original Language for the movie. " +
+            "Also refer to \"ReleaseDates\" schema to view movie release date in other countries.")]
         public string OriginalLanguage { get; set; }
 
         [BsonElement("tagline")]
         [GraphQLName("tagline")]
+        [GraphQLDescription("Displays the TagLine of the movie.")]
         public string? TagLine { get; set; }
 
         [BsonElement("overview")]
         [GraphQLName("overview")]
+        [GraphQLDescription("Displays the Overview of the movie. Consider this as a summary for the movie.")]
         public string Overview { get; set; }
 
         [BsonElement("popularity")]
         [GraphQLName("popularity")]
+        [GraphQLDescription("Displays the Popularity of the movie. This metric is specific to TMDB.")]
         public double Popularity { get; set; }
 
         [BsonElement("production_companies")]
         [GraphQLName("productioncompanies")]
+        [GraphQLDescription("Displays all \"ProductionCompanies\" involves in the production of the movie." +
+            "You can query: logo, name and origincountry fields.")]
         public ProductionCompanies[]? ProductionCompanies { get; set; }
 
         [BsonElement("production_countries")]

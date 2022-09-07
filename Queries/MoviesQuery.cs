@@ -26,7 +26,7 @@ namespace Popcorn.Queries
         [UsePaging(MaxPageSize = 50)]
         [UseProjection]
         [UseFiltering]
-        [UseSorting(typeof(PopularitySortType))]
+        [UseSorting(typeof(MovieSortType))]
         public async Task<IExecutable<Movie>> SearchMovies(string moviename="")
         {
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
