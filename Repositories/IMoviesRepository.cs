@@ -11,5 +11,7 @@ namespace Popcorn.Repositories
         Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName);
 
         Task<IExecutable<Movie>> GetMoviesById(int MovieId);
+
+        Task<IExecutable<Movie>> GetMovieById(object? MovieId);
     }
 }

@@ -209,3 +209,28 @@ query {
 }
 
 ########################################################
+
+# Query to accept movie id in integer or string format.
+# Though you can make use of the search movie function 
+# and apply the filter on either TMDBId or on IMDBId field.
+# This function also demonstrates the usage of AnyType in GraphQL
+
+query GetMoviesById ($id: Any!) {
+  movieById (movieid: $id ) {
+    id
+    title
+  }
+}
+
+
+vars:
+{
+  "id": 857
+}
+
+# or string type
+{
+  "id": "tt0240464"
+}
+
+########################################################

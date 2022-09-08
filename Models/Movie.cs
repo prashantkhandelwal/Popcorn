@@ -1,9 +1,9 @@
-﻿using HotChocolate.Data;
-using MongoDB.Bson;
+﻿using MongoDB.Bson;
 using MongoDB.Bson.Serialization.Attributes;
 
 namespace Popcorn.Models
 {
+
     [BsonIgnoreExtraElements]
     [BsonDiscriminator("movies")]
     public class Movie

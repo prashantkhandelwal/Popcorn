@@ -15,10 +15,50 @@ namespace Popcorn.Repositories
             _database = _client.GetDatabase("moviedb");
         }
 
+        public async Task<IExecutable<Movie>> GetMovieById(object? MovieId)
+        {
+            FilterDefinition<Movie>? filter = null;
+
+            if (MovieId != null)
+            {
+                // If MovieId is of type integer, then it is TMDB movie Id.
+                // If MovieId is of type string, then it is IMDB Id.
+                Int32 id32 = 0;
+                Int64 id64 = 0;
+                string id_s = string.Empty;
+                string objType = MovieId.GetType().ToString();
+                switch (objType)
+                {
+                    case "System.Int32":
+                        Int32.TryParse(Convert.ToString(MovieId), out id32);
+                        filter = Builders<Movie>.Filter.Eq(e => e.TMDBId, id32);
+                        break;
+                    case "System.Int64":
+                        Int64.TryParse(Convert.ToString(MovieId), out id64);
+                        filter = Builders<Movie>.Filter.Eq(e => e.TMDBId, id64);
+                        break;
+                    case "System.String":
+#pragma warning disable CS8600 // Converting null literal or possible null value to non-nullable type.
+                        id_s = Convert.ToString(MovieId);
+#pragma warning restore CS8600 // Converting null literal or possible null value to non-nullable type.
+                        filter = Builders<Movie>.Filter.Eq(e => e.IMDBId, id_s);
+                        break;
+                    default:
+                        break;
+                }
+            }
+
+            IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
+
+            return await Task.FromResult(_collection.Find(filter)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
+
         public async Task<IExecutable<Movie>> GetMoviesById(int MovieId)
         {
             IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
-            return await Task.FromResult(_collection.Find(c => c.TMDBId == MovieId)
+            return await Task.FromResult(_collection.Find(c => c.TMDBId == 4)
                 .AsExecutable())
                 .ConfigureAwait(false);
         }
