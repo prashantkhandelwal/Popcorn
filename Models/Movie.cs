@@ -46,27 +46,29 @@ namespace Popcorn.Models
 
         [BsonElement("tagline")]
         [GraphQLName("tagline")]
-        [GraphQLDescription("Displays the TagLine of the movie.")]
+        [GraphQLDescription("TagLine of the movie.")]
         public string? TagLine { get; set; }
 
         [BsonElement("overview")]
         [GraphQLName("overview")]
-        [GraphQLDescription("Displays the Overview of the movie. Consider this as a summary for the movie.")]
+        [GraphQLDescription("Entire \"Overview\" of the movie. Consider this as a summary for the movie.")]
         public string Overview { get; set; }
 
         [BsonElement("popularity")]
         [GraphQLName("popularity")]
-        [GraphQLDescription("Displays the Popularity of the movie. This metric is specific to TMDB.")]
+        [GraphQLDescription("Popularity of the movie. This metric is specific to TMDB.")]
         public double Popularity { get; set; }
 
         [BsonElement("production_companies")]
         [GraphQLName("productioncompanies")]
-        [GraphQLDescription("Displays all \"ProductionCompanies\" involves in the production of the movie." +
+        [GraphQLDescription("All \"ProductionCompanies\" involves in the production of the movie." +
             "You can query: logo, name and origincountry fields.")]
         public ProductionCompanies[]? ProductionCompanies { get; set; }
 
         [BsonElement("production_countries")]
         [GraphQLName("productioncountries")]
+        [GraphQLDescription("All \"ProductionCountries\" involves in the production of the movie." +
+            "You can query: countrycode and countryname fields.")]
         public ProductionCountries[]? ProductionCountries { get; set; }
 
         [BsonElement("spoken_languages")]
@@ -75,10 +77,12 @@ namespace Popcorn.Models
 
         [BsonElement("adult")]
         [GraphQLName("isadult")]
+        [GraphQLDescription("If movie is an adult movie.")]
         public bool IsAdult { get; set; }
 
         [BsonElement("homepage")]
         [GraphQLName("homepage")]
+        [GraphQLDescription("Website for the movie.")]
         public string Homepage { get; set; }
 
         [BsonElement("backdrop_path")]
@@ -155,11 +159,11 @@ namespace Popcorn.Models
     public class ProductionCountries
     {
         [BsonElement("iso_3166_1")]
-        [GraphQLName("name")]
+        [GraphQLName("countrycode")]
         public string CountryCode { get; set; }
 
         [BsonElement("name")]
-        [GraphQLName("name")]
+        [GraphQLName("countryname")]
         public string Name { get; set; }
     }
 
