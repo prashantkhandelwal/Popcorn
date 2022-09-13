@@ -27,7 +27,7 @@ namespace Popcorn.Queries
         [UseProjection]
         [UseFiltering]
         [UseSorting(typeof(MovieSortType))]
-        [GraphQLDescription("Search movies on the basis of properties defined in \"Movies\" schema.")]
+        [GraphQLDescription("Search movies on the basis of properties defined in \"Movie\" schema.")]
         public async Task<IExecutable<Movie>> SearchMovies(string moviename="")
         {
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
@@ -40,6 +40,7 @@ namespace Popcorn.Queries
         }
 
         [UseProjection]
+        [GraphQLDescription("Get a movie by the providing the TMDBID (integer) e.g. 2, 857 etc. or IMDBID (string) e.g. tt0116629.")]
         public async Task<IExecutable<Movie>> GetMovieById([GraphQLType(typeof(AnyType))] object? movieid)
         {
             return await _moviesRepository.GetMovieById(movieid).ConfigureAwait(false);
