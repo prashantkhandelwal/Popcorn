@@ -5,6 +5,7 @@ using Popcorn.Repositories;
 
 namespace Popcorn.Queries
 {
+    [GraphQLDescription("Query to search Movie Database.")]
     public class MoviesQuery
     {
         private readonly IMoviesRepository _moviesRepository;

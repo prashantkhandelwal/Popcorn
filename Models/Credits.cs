@@ -4,6 +4,7 @@ namespace Popcorn.Models
 {
     [BsonIgnoreExtraElements]
     [BsonDiscriminator("credits")]
+    [GraphQLDescription("Includes \"Cast\" and \"Crew\" of the movie.")]
     public class Credits
     {
         [GraphQLType(typeof(Guid))]
@@ -24,6 +25,7 @@ namespace Popcorn.Models
     }
 
     [BsonIgnoreExtraElements]
+    [GraphQLDescription("All the \"Cast\" of the movie.")]
     public class Cast
     {
         [GraphQLType(typeof(Guid))]
@@ -81,7 +83,7 @@ namespace Popcorn.Models
     }
 
     [BsonIgnoreExtraElements]
-
+    [GraphQLDescription("All the \"Crew\" of the movie.")]
     public class Crew
     {
         [GraphQLType(typeof(Guid))]

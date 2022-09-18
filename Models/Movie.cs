@@ -6,6 +6,7 @@ namespace Popcorn.Models
 
     [BsonIgnoreExtraElements]
     [BsonDiscriminator("movies")]
+    [GraphQLDescription("All details of the movie.")]
     public class Movie
     {
         [GraphQLType(typeof(Guid))]
@@ -132,6 +133,7 @@ namespace Popcorn.Models
     }
 
     [BsonIgnoreExtraElements]
+    [GraphQLDescription("All Genres of the movie.")]
     public class Genres
     {
         [BsonElement("name")]
@@ -140,6 +142,7 @@ namespace Popcorn.Models
     }
 
     [BsonIgnoreExtraElements]
+    [GraphQLDescription("All Production Companies involved in the production of the movie.")]
     public class ProductionCompanies
     {
         [BsonElement("logo_path")]
@@ -156,6 +159,7 @@ namespace Popcorn.Models
     }
 
     [BsonIgnoreExtraElements]
+    [GraphQLDescription("All Production Countries of the movie.")]
     public class ProductionCountries
     {
         [BsonElement("iso_3166_1")]
@@ -168,6 +172,7 @@ namespace Popcorn.Models
     }
 
     [BsonIgnoreExtraElements]
+    [GraphQLDescription("All Spoken Languages movie was released in.")]
     public class SpokenLanguages
     {
         [BsonElement("english_name")]
@@ -184,6 +189,7 @@ namespace Popcorn.Models
     }
 
     [BsonIgnoreExtraElements]
+    [GraphQLDescription("Collection names which movie belongs to.")]
     public class BelongsToCollection
     {
         [BsonElement("id")]
