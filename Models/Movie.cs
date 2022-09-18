@@ -31,7 +31,7 @@ namespace Popcorn.Models
         [BsonElement("belongs_to_collection")]
         [GraphQLName("belongstocollection")]
         [GraphQLDescription("Collection name which this movie belongs to. Refer to \"BelongsToCollection\" schema.")]
-        public BelongsToCollection BelongsToCollection { get; set; }
+        public BelongsToCollection? BelongsToCollection { get; set; }
 
         [BsonElement("original_title")]
         [GraphQLName("originaltitle")]
