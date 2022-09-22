@@ -10,10 +10,7 @@ Popcorn is a GraphQL interface to query movie data. The movie database is create
 
 ![Schema](https://raw.githubusercontent.com/prashantkhandelwal/Popcorn/main/Assets/Schema.png)
 
-# Prerequisites
-
-- Visual Studio 2022
-- .NET 6.0
-- MongoDB
-- MongoDB Compass v1.33.x - Installs with MongoDB (Optional)
-- 7-Zip
+# Docs
+- [Index](https://github.com/prashantkhandelwal/Popcorn/wiki)
+  - [Setting Up Dev Environment](https://github.com/prashantkhandelwal/Popcorn/wiki/Setting-up-dev-environment)
+  - [Backup & Restore Movie Database](https://github.com/prashantkhandelwal/Popcorn/wiki/Backup-&-Restore-Movie-Database)
