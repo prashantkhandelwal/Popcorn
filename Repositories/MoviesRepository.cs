@@ -55,10 +55,10 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
-        public async Task<IExecutable<Movie>> GetMoviesById(int MovieId)
+        public async Task<IExecutable<Movie>> GetMovieById(int MovieId)
         {
             IMongoCollection<Movie> _collection = _database.GetCollection<Movie>("movies");
-            return await Task.FromResult(_collection.Find(c => c.TMDBId == 4)
+            return await Task.FromResult(_collection.Find(c => c.TMDBId == MovieId)
                 .AsExecutable())
                 .ConfigureAwait(false);
         }

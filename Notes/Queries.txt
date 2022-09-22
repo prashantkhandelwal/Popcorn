@@ -22,6 +22,30 @@ vars;
 
 ###########################################
 
+# With paging in place, the query to get movies 
+# by director name wil change to the following query
+# Here passing ID is very important, as the Movie schema
+# is stiched at runtime on the basis of the id. 
+# In this case this id is TMDB ID.
+
+query ($name: String!) {
+  moviesByDirector (directorname: $name ){
+    nodes{
+      id
+      movies {
+        title
+      }
+    }
+  }
+}
+
+vars;
+{
+  "name": "steven spielberg"
+}
+
+###########################################
+
 # Get Movies by name - Approach 1
 
 query ($name: String!) {

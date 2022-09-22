@@ -8,7 +8,7 @@ namespace Popcorn.Queries.Extensions
         {
             public async Task<IExecutable<Movie>> GetMovies([Parent] Credits credits, [Service] IMoviesRepository _movies)
             {
-                return await _movies.GetMoviesById(credits.Id).ConfigureAwait(false);
+                return await _movies.GetMovieById(credits.Id).ConfigureAwait(false);
             }
         }
     }

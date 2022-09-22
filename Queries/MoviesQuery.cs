@@ -34,7 +34,9 @@ namespace Popcorn.Queries
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
         }
 
+        [UsePaging(MaxPageSize = 50)]
         [UseProjection]
+        [GraphQLDescription("Get all movies by director name. The query will get \"Credits-Crew\" and then strich \"Movie\" schema to it.")]
         public async Task<IExecutable<Credits>> GetMoviesByDirector(string directorname)
         {
             return await _moviesRepository.GetMoviesDirectedBy(directorname);
