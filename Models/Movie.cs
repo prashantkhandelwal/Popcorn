@@ -112,7 +112,7 @@ namespace Popcorn.Models
 
         [BsonElement("revenue")]
         [GraphQLName("revenue")]
-        public int Revenue { get; set; }
+        public long Revenue { get; set; }
 
         [BsonElement("status")]
         [GraphQLName("status")]
