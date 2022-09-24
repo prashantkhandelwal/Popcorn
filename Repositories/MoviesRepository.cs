@@ -81,21 +81,6 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
-        public async Task<IExecutable<Credits>> GetCredits(int MovieId = 0)
-        {
-            IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
-            if (MovieId == 0)
-            {
-                return await Task.FromResult(_collection
-                    .AsExecutable())
-                    .ConfigureAwait(false);
-            }
-
-            return await Task.FromResult(_collection.Find(c => c.Id == MovieId)
-                .AsExecutable())
-                .ConfigureAwait(false);
-        }
-
         public async Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName)
         {
             IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
@@ -113,6 +98,21 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
+        public async Task<IExecutable<Credits>> GetCredits(int MovieId = 0)
+        {
+            IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
+            if (MovieId == 0)
+            {
+                return await Task.FromResult(_collection
+                    .AsExecutable())
+                    .ConfigureAwait(false);
+            }
+
+            return await Task.FromResult(_collection.Find(c => c.Id == MovieId)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
+
         public async Task<IExecutable<Keywords>> GetKeywords(int MovieId)
         {
             IMongoCollection<Keywords> _collection = _database.GetCollection<Keywords>("keywords");
@@ -120,12 +120,6 @@ namespace Popcorn.Repositories
             return await Task.FromResult(_collection.Find(c => c.Id == MovieId)
                 .AsExecutable())
                 .ConfigureAwait(false);
-            //var filter = Builders<Words>
-            //            .Filter
-            //            .In(
-            //             e => e.Name, Keywords);
-
-            //var moviesbykeywords = Builders<Movie>.Filter.ElemMatch(t => t.Genres, filter);
         }
 
 
