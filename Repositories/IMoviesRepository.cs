@@ -13,5 +13,7 @@ namespace Popcorn.Repositories
         Task<IExecutable<Movie>> GetMovieById(int MovieId);
 
         Task<IExecutable<Movie>> GetMovieById(object? MovieId);
+
+        Task<IExecutable<Keywords>> GetKeywords(int MovieId);
     }
 }

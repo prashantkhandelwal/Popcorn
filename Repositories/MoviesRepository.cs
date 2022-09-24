@@ -113,6 +113,22 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
+        public async Task<IExecutable<Keywords>> GetKeywords(int MovieId)
+        {
+            IMongoCollection<Keywords> _collection = _database.GetCollection<Keywords>("keywords");
+
+            return await Task.FromResult(_collection.Find(c => c.Id == MovieId)
+                .AsExecutable())
+                .ConfigureAwait(false);
+            //var filter = Builders<Words>
+            //            .Filter
+            //            .In(
+            //             e => e.Name, Keywords);
+
+            //var moviesbykeywords = Builders<Movie>.Filter.ElemMatch(t => t.Genres, filter);
+        }
+
+
         #region Other Implementations
 
 
