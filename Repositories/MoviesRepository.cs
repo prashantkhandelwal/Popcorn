@@ -98,6 +98,22 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
+        public async Task<IExecutable<Keywords>> SearchMoviesByKeywords(string Keywords)
+        {
+            IMongoCollection<Keywords> _collection = _database.GetCollection<Keywords>("keywords");
+
+            var filter = Builders<Keywords>
+                .Filter
+                .ElemMatch(
+                e => e.Words,
+                e => e.Name.ToLowerInvariant() == Keywords.ToLowerInvariant());
+
+            return await Task.FromResult(
+               _collection.Find(filter)
+               .AsExecutable())
+               .ConfigureAwait(false);
+        }
+
         public async Task<IExecutable<Credits>> GetCredits(int MovieId = 0)
         {
             IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
@@ -169,8 +185,8 @@ namespace Popcorn.Repositories
         }
 
         // Below code can also be used to get the movies by director name
-        // This approach is naive and much slower and quesry execution takes time.
-        // The above implementation is recommended and is much faster coparatively.
+        // This approach is naive and much slower and query execution takes time.
+        // The above implementation is recommended and is much faster.
 
         //public async Task<List<Movie>> GetMoviesDirectedBy(string DirectorName)
         //{

@@ -42,6 +42,13 @@ namespace Popcorn.Queries
             return await _moviesRepository.GetMoviesDirectedBy(directorname);
         }
 
+        [UsePaging(MaxPageSize = 50)]
+        [UseProjection]
+        public async Task<IExecutable<Keywords>> GetMoviesByKeywords(string keywords)
+        {
+            return await _moviesRepository.SearchMoviesByKeywords(keywords);
+        }
+
         [UseProjection]
         [GraphQLDescription("Get a movie by the providing the TMDBID (integer) e.g. 2, 857 etc. or IMDBID (string) e.g. tt0116629.")]
         public async Task<IExecutable<Movie>> GetMovieById([GraphQLType(typeof(AnyType))] object? movieid)
