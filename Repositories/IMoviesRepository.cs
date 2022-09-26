@@ -6,6 +6,8 @@ namespace Popcorn.Repositories
     {
         Task<IExecutable<Movie>> SearchMovies(string MovieName);
 
+        Task<IExecutable<Keywords>> SearchMoviesByKeywords(string Keywords);
+
         Task<IExecutable<Credits>> GetCredits(int MovieId);
 
         Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName);
