@@ -28,7 +28,17 @@ string env = (app.Environment.IsDevelopment()) ? string.Empty : ".Production";
 builder.Configuration.AddJsonFile($"appsettings{env}.json", optional: false, reloadOnChange: true);
 builder.Configuration.AddEnvironmentVariables();
 
-app.UseDefaultFiles();
+app.UseRouting();
+
+app.UseEndpoints(endpoints =>
+{
+    endpoints.MapGet("/", e =>
+    {
+        e.Response.Redirect("/docs/index.html", permanent: false);
+        return Task.CompletedTask;
+    });
+});
+
 app.UseStaticFiles(new StaticFileOptions
 {
     FileProvider = new PhysicalFileProvider(
