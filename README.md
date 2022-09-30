@@ -4,6 +4,11 @@
 
 <h3 align="center">GraphQL Interface for Movie Data</h3>
 
+<p align="center">
+<a href="https://github.com/prashantkhandelwal/Popcorn/actions/workflows/build-main.yml">
+<img src="https://github.com/prashantkhandelwal/Popcorn/actions/workflows/build-main.yml/badge.svg"/>
+</a>
+
 ---
 
 Popcorn is a GraphQL interface to query movie data. The movie database is created from the data collected from themoviedb.org. 
