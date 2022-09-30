@@ -2,7 +2,7 @@ name: Deploy-Azure
 on:
   push:
     branches:
-    - cicd
+    - main
 env:
   AZURE_WEBAPP_NAME: popcorndb
   AZURE_WEBAPP_PACKAGE_PATH: ./publish
