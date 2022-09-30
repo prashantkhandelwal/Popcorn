@@ -12,6 +12,7 @@ builder.Services.AddRouting();
 builder.Services.AddTransient<IMoviesRepository, MoviesRepository>();
 builder.Services.AddGraphQLServer()
     .AddQueryType<MoviesQuery>()
+    .RegisterService<IMoviesRepository>()
     .AddTypeExtension<MovieCreditsExtension>()
     .AddTypeExtension<KeywordsMovieExtension>()
     .AddTypeExtension<CreditsMovieExtension>()
@@ -25,7 +26,7 @@ var app = builder.Build();
 
 string env = (app.Environment.IsDevelopment()) ? string.Empty : ".Production";
 builder.Configuration.AddJsonFile($"appsettings{env}.json", optional: false, reloadOnChange: true);
-
+builder.Configuration.AddEnvironmentVariables();
 
 app.UseDefaultFiles();
 app.UseStaticFiles(new StaticFileOptions

@@ -8,11 +8,9 @@ namespace Popcorn.Queries
     [GraphQLDescription("Query to search Movie Database.")]
     public class MoviesQuery
     {
-        private readonly IMoviesRepository _moviesRepository;
-
-        public MoviesQuery(IMoviesRepository repo)
+        public MoviesQuery()
         {
-            _moviesRepository = repo;
+
         }
 
         // As UseProjection attribute is used here.
@@ -29,7 +27,7 @@ namespace Popcorn.Queries
         [UseFiltering]
         [UseSorting(typeof(MovieSortType))]
         [GraphQLDescription("Search movies on the basis of properties defined in \"Movie\" schema.")]
-        public async Task<IExecutable<Movie>> SearchMovies(string moviename="")
+        public async Task<IExecutable<Movie>> SearchMovies(IMoviesRepository _moviesRepository, string moviename = "")
         {
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
         }
@@ -37,21 +35,21 @@ namespace Popcorn.Queries
         [UsePaging(MaxPageSize = 50)]
         [UseProjection]
         [GraphQLDescription("Get all movies by director name. The query will get \"Credits-Crew\" and then strich \"Movie\" schema to it.")]
-        public async Task<IExecutable<Credits>> GetMoviesByDirector(string directorname)
+        public async Task<IExecutable<Credits>> GetMoviesByDirector(string directorname, IMoviesRepository _moviesRepository)
         {
             return await _moviesRepository.GetMoviesDirectedBy(directorname);
         }
 
         [UsePaging(MaxPageSize = 50)]
         [UseProjection]
-        public async Task<IExecutable<Keywords>> GetMoviesByKeywords(string keywords)
+        public async Task<IExecutable<Keywords>> GetMoviesByKeywords(string keywords, IMoviesRepository _moviesRepository)
         {
             return await _moviesRepository.SearchMoviesByKeywords(keywords);
         }
 
         [UseProjection]
         [GraphQLDescription("Get a movie by the providing the TMDBID (integer) e.g. 2, 857 etc. or IMDBID (string) e.g. tt0116629.")]
-        public async Task<IExecutable<Movie>> GetMovieById([GraphQLType(typeof(AnyType))] object? movieid)
+        public async Task<IExecutable<Movie>> GetMovieById([GraphQLType(typeof(AnyType))] object? movieid, IMoviesRepository _moviesRepository)
         {
             return await _moviesRepository.GetMovieById(movieid).ConfigureAwait(false);
         }
