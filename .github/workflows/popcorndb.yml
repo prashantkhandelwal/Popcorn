@@ -1,4 +1,4 @@
-name: Build and deploy .NET Core app to Windows WebApp popcorndb
+name: Deploy-Azure
 on:
   push:
     branches:

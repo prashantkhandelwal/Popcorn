@@ -8,11 +8,19 @@ namespace Popcorn.Repositories
     {
         private IMongoClient _client;
         private IMongoDatabase _database;
+        private string _connectionString = string.Empty;
 
-        public MoviesRepository()
+        public MoviesRepository(IConfiguration configuration)
         {
-            _client = new MongoClient("mongodb://127.0.0.1");
-            _database = _client.GetDatabase("moviedb");
+            string? server = configuration["Server"];
+            string? port = configuration["Port"];
+            string? username = configuration["Username"];
+            string? password = configuration["Password"];
+            string? database = configuration["Database"];
+
+            _connectionString = $"mongodb://{username}:{password}@{server}:{port}";
+            _client = new MongoClient(_connectionString);
+            _database = _client.GetDatabase(database);
         }
 
         public async Task<IExecutable<Movie>> GetMovieById(object? MovieId)

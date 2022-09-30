@@ -4,6 +4,7 @@ using HotChocolate.AspNetCore.Voyager;
 using Popcorn.Queries.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Path = System.IO.Path;
+using HotChocolate.Execution.Options;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -17,14 +18,14 @@ builder.Services.AddGraphQLServer()
     .AddMongoDbPagingProviders()
     .AddMongoDbProjections()
     .AddMongoDbFiltering()
-    .AddMongoDbSorting();
+    .AddMongoDbSorting()
+    .SetRequestOptions(_ => new RequestExecutorOptions { ExecutionTimeout = TimeSpan.FromMinutes(1) });
 
 var app = builder.Build();
 
-if (app.Environment.IsDevelopment())
-{
-    // Do something when debugging.
-}
+string env = (app.Environment.IsDevelopment()) ? string.Empty : ".Production";
+builder.Configuration.AddJsonFile($"appsettings{env}.json", optional: false, reloadOnChange: true);
+
 
 app.UseDefaultFiles();
 app.UseStaticFiles(new StaticFileOptions
