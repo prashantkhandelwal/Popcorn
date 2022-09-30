@@ -14,7 +14,7 @@ namespace Popcorn.Repositories
         {
             string? server = configuration["Server"];
             string? port = configuration["Port"];
-            string? username = configuration["Username"];
+            string? username = configuration["User"];
             string? password = configuration["Password"];
             string? database = configuration["Database"];
 
