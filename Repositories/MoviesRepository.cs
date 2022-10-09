@@ -18,7 +18,15 @@ namespace Popcorn.Repositories
             string? password = configuration["Password"];
             string? database = configuration["Database"];
 
-            _connectionString = $"mongodb://{username}:{password}@{server}:{port}";
+            if(string.IsNullOrEmpty(username))
+            {
+                _connectionString = $"mongodb://{server}:{port}";
+            }
+            else
+            {
+                _connectionString = $"mongodb://{username}:{password}@{server}:{port}";
+            }
+
             _client = new MongoClient(_connectionString);
             _database = _client.GetDatabase(database);
         }
