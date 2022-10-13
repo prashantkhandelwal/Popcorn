@@ -114,6 +114,23 @@ namespace Popcorn.Repositories
                 .ConfigureAwait(false);
         }
 
+        public async Task<IExecutable<Credits>> GetMoviesByActor(string ActorName)
+        {
+            IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
+
+            var filter = Builders<Credits>
+                .Filter
+                .ElemMatch(
+                e => e.Cast,
+                e => e.KnownForDepartment == "Acting" &&
+                e.Name.ToLowerInvariant() == ActorName.ToLowerInvariant());
+
+            return await Task.FromResult(
+                _collection.Find(filter)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
+
         public async Task<IExecutable<Keywords>> SearchMoviesByKeywords(string Keywords)
         {
             IMongoCollection<Keywords> _collection = _database.GetCollection<Keywords>("keywords");
