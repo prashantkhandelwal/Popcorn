@@ -5,13 +5,27 @@ using Popcorn.Queries.Extensions;
 using Microsoft.Extensions.FileProviders;
 using Path = System.IO.Path;
 using HotChocolate.Execution.Options;
+using HotChocolate.Types.Pagination;
 
 var builder = WebApplication.CreateBuilder(args);
+
+string env = (builder.Environment.IsDevelopment()) ? string.Empty : ".Production";
+builder.Configuration.AddJsonFile($"appsettings{env}.json", optional: false, reloadOnChange: true);
+builder.Configuration.AddEnvironmentVariables();
+
+PagingOptions pagingOptions = new PagingOptions
+{
+    DefaultPageSize = builder.Configuration.GetValue<int>("PageSize"),
+    MaxPageSize = builder.Configuration.GetValue<int>("MaxPageSize"),
+    IncludeTotalCount = builder.Configuration.GetValue<bool>("IncludePageTotalCount"),
+    AllowBackwardPagination = builder.Configuration.GetValue<bool>("AllowBackwardPagination"),
+};
 
 builder.Services.AddRouting();
 builder.Services.AddTransient<IMoviesRepository, MoviesRepository>();
 builder.Services.AddGraphQLServer()
     .AddQueryType<MoviesQuery>()
+    .SetPagingOptions(pagingOptions)
     .RegisterService<IMoviesRepository>()
     .AddTypeExtension<MovieCreditsExtension>()
     .AddTypeExtension<KeywordsMovieExtension>()
@@ -23,10 +37,6 @@ builder.Services.AddGraphQLServer()
     .SetRequestOptions(_ => new RequestExecutorOptions { ExecutionTimeout = TimeSpan.FromMinutes(1) });
 
 var app = builder.Build();
-
-string env = (app.Environment.IsDevelopment()) ? string.Empty : ".Production";
-builder.Configuration.AddJsonFile($"appsettings{env}.json", optional: false, reloadOnChange: true);
-builder.Configuration.AddEnvironmentVariables();
 
 app.UseRouting();
 

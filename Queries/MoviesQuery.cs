@@ -22,7 +22,7 @@ namespace Popcorn.Queries
         // db.system.profile.find().pretty()
         // db.adminCommand( { getLog:'global'} ).log.forEach(x => {print(x)})
 
-        [UsePaging(MaxPageSize = 100, DefaultPageSize = 20, IncludeTotalCount = true)]
+        [UsePaging]
         [UseProjection]
         [UseFiltering]
         [UseSorting(typeof(MovieSortType))]
@@ -32,7 +32,7 @@ namespace Popcorn.Queries
             return await _moviesRepository.SearchMovies(moviename).ConfigureAwait(false);
         }
 
-        [UsePaging(MaxPageSize = 100, DefaultPageSize = 20, IncludeTotalCount = true)]
+        [UsePaging]
         [UseProjection]
         [GraphQLDescription("Get all movies by director name. The query will get \"Credits-Crew\" and then stich \"Movie\" schema to it.")]
         public async Task<IExecutable<Credits>> GetMoviesByDirector(string directorname, IMoviesRepository _moviesRepository)
@@ -40,7 +40,7 @@ namespace Popcorn.Queries
             return await _moviesRepository.GetMoviesDirectedBy(directorname);
         }
 
-        [UsePaging(MaxPageSize = 100,DefaultPageSize = 20, IncludeTotalCount = true)]
+        [UsePaging]
         [UseProjection]
         [GraphQLDescription("Get all movies by actor name. The query will get \"Credits-Cast\" and then stich \"Movie\" schema to it.")]
         public async Task<IExecutable<Credits>> GetMoviesByActor(string actorname, IMoviesRepository _moviesRepository)
@@ -48,14 +48,14 @@ namespace Popcorn.Queries
             return await _moviesRepository.GetMoviesByActor(actorname);
         }
 
-        [UsePaging(MaxPageSize = 100, DefaultPageSize = 20, IncludeTotalCount = true)]
+        [UsePaging]
         [UseProjection]
         public async Task<IExecutable<Keywords>> GetMoviesByKeywords(string keywords, IMoviesRepository _moviesRepository)
         {
             return await _moviesRepository.SearchMoviesByKeywords(keywords);
         }
 
-        [UsePaging(MaxPageSize = 100, DefaultPageSize = 20, IncludeTotalCount = true)]
+        [UsePaging]
         [UseProjection]
         [GraphQLDescription("Get a movie by the providing the TMDBID (integer) e.g. 2, 857 etc. or IMDBID (string) e.g. tt0116629.")]
         public async Task<IExecutable<Movie>> GetMovieById([GraphQLType(typeof(AnyType))] object? movieid, IMoviesRepository _moviesRepository)
