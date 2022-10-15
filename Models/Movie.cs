@@ -92,14 +92,17 @@ namespace Popcorn.Models
 
         [BsonElement("poster_path")]
         [GraphQLName("poster")]
+        [GraphQLDescription("The poster of the movie.")]
         public string? Poster { get; set; }
 
         [BsonElement("genres")]
         [GraphQLName("genres")]
+        [GraphQLDescription("Genres of the movie.")]
         public Genres[]? Genres { get; set; }
 
         [BsonElement("runtime")]
         [GraphQLName("runtime")]
+        [GraphQLDescription("Total runtime of the movie in minutes.")]
         public int Runtime { get; set; }
 
         [BsonElement("release_date")]
@@ -138,6 +141,7 @@ namespace Popcorn.Models
     {
         [BsonElement("name")]
         [GraphQLName("name")]
+        [GraphQLDescription("Movie genre name.")]
         public string Name { get; set; }
     }
 

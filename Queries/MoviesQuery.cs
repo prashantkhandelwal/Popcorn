@@ -50,6 +50,7 @@ namespace Popcorn.Queries
 
         [UsePaging]
         [UseProjection]
+        [GraphQLDescription("Get all movies by keywords. The query will search \"Keywords\" and then stich \"Movies\" schema to it.")]
         public async Task<IExecutable<Keywords>> GetMoviesByKeywords(string keywords, IMoviesRepository _moviesRepository)
         {
             return await _moviesRepository.SearchMoviesByKeywords(keywords);
