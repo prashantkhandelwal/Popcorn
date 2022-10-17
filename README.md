@@ -13,6 +13,9 @@
 
 Popcorn is a GraphQL interface to query movie data. The movie database is created from the data collected from themoviedb.org. 
 
+# Live Demo
+You can play with the GraphQL interface [here](https://popcorndb.azurewebsites.net/).
+
 ![Schema](https://raw.githubusercontent.com/prashantkhandelwal/Popcorn/main/Assets/Schema.png)
 
 # Docs
