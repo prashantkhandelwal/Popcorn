@@ -22,3 +22,5 @@ You can play with the GraphQL interface [here](https://popcorndb.azurewebsites.n
 - [Index](https://github.com/prashantkhandelwal/Popcorn/wiki)
   - [Setting Up Dev Environment](https://github.com/prashantkhandelwal/Popcorn/wiki/Setting-up-dev-environment)
   - [Backup & Restore Movie Database](https://github.com/prashantkhandelwal/Popcorn/wiki/Backup-&-Restore-Movie-Database)
+  - [All GraphQL Queries](https://github.com/prashantkhandelwal/Popcorn/wiki/All-GraphQL-Queries)
+  
