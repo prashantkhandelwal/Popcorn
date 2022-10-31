@@ -151,14 +151,17 @@ namespace Popcorn.Models
     {
         [BsonElement("logo_path")]
         [GraphQLName("logo")]
+        [GraphQLDescription("Logo of the production company.")]
         public string? LogoPath { get; set; }
 
         [BsonElement("name")]
         [GraphQLName("name")]
+        [GraphQLDescription("Name of the production company."]
         public string Name { get; set; }
 
         [BsonElement("origin_country")]
         [GraphQLName("origincountry")]
+        [GraphQLDescription("Origin Country of the production company."]
         public string? OriginCountry { get; set; }
     }
 
