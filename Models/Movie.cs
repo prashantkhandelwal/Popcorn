@@ -171,10 +171,12 @@ namespace Popcorn.Models
     {
         [BsonElement("iso_3166_1")]
         [GraphQLName("countrycode")]
+        [GraphQLDescription("ISO-3166-1 Country Code.")]
         public string CountryCode { get; set; }
 
         [BsonElement("name")]
         [GraphQLName("countryname")]
+        [GraphQLDescription("Production company country name.")]
         public string Name { get; set; }
     }
 
@@ -184,14 +186,17 @@ namespace Popcorn.Models
     {
         [BsonElement("english_name")]
         [GraphQLName("language")]
+        [GraphQLDescription("Language name in english.")]
         public string EnglishName { get; set; }
 
         [BsonElement("iso_639_1")]
         [GraphQLName("languagecode")]
+        [GraphQLDescription("ISO-639 language code")]
         public string LanguageCode { get; set; }
 
         [BsonElement("name")]
         [GraphQLName("name")]
+        [GraphQLDescription("Language name")]
         public string Name { get; set; }
     }
 
