@@ -156,12 +156,12 @@ namespace Popcorn.Models
 
         [BsonElement("name")]
         [GraphQLName("name")]
-        [GraphQLDescription("Name of the production company."]
+        [GraphQLDescription("Name of the production company.")]
         public string Name { get; set; }
 
         [BsonElement("origin_country")]
         [GraphQLName("origincountry")]
-        [GraphQLDescription("Origin Country of the production company."]
+        [GraphQLDescription("Origin Country of the production company.")]
         public string? OriginCountry { get; set; }
     }
 
