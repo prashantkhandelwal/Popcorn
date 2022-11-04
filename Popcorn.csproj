@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Deployment\Azure\" />
     <Folder Include="Web\img\" />
   </ItemGroup>
 
