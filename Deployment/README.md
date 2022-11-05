@@ -1,0 +1,70 @@
+# Deployment
+
+This directory contains Terraform (IaC) resource to build your own infrastructure in Azure to deploy this application.
+
+# Resources Deployed
+- Virtual Machine - Ubuntu (20.0.4) - This VM hosts the MongoDB
+- App Service Plan - S1 - Web App deployment resource
+
+# Configuring Azure CLI
+[Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli) must be installed before you can execute Terraform commands. After Azure CLI is installed, login with your Azure credentials by executing the below command
+
+```shell
+az login
+```
+
+This command will propmts you with login screen. After you successfully authenticate with your credentials, you will see the list of subscriptions. If for some reason you 
+are unable to see the list of subscriptions, you can use the below command to list all subscription. 
+
+```shell
+az account list
+```
+
+After this you can take the `subscription id` from the output of the above command and set it in the command below.
+
+```shell
+az account set --subscription <subscription id>
+```
+
+Now Azure CLI is configured to use with your specified Azure subscription.
+
+# Configuring Terraform
+[Download Terraform](https://www.terraform.io/downloads) from the official website and add it to the system environment path. No other configuration needed on Terraform installation side. 
+
+# Files
+- main.tf - Contains the resource group name
+- vm.tf - Creates Ubuntu Virtual Machine which will host MongoDB.
+- providers.tf - Providers used in Terraform.
+- variables.tf - Contains the actual values for all the resources. Edit this file if you want to change anything in your deployment.
+
+# Deployment Commands
+Navigate to Deployment/Azure directory and initialize Terraform using this command:
+
+```shell
+$ terraform init
+```
+
+After the initialization is completed, the next step is to plan for the deployment. This command will not create any resource in Azure. It will only list which resources are going to be created, changed or destroyed.
+
+```shell
+$ terraform plan
+```
+
+Verify the details outputted by `plan` command. If all looks good to you then, then apply these configuration with `apply` command.
+
+```shell
+$ terraform apply
+```
+
+# Other Terrafrom Commands
+
+### Format .tf file
+```shell
+$ terraform fmt
+```
+
+### Validate Terraform syntax
+```shell
+$ terraform validate
+```
+
