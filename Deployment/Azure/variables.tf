@@ -21,6 +21,7 @@ variable "vm_nsg_name" {
 
 variable "vm_public_ip_name" {
   default = "popcornvmip"
+}
 
 variable "vm_nic_name" {
   default = "popcronvm-nic"
