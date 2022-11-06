@@ -50,7 +50,7 @@ After the initialization is completed, the next step is to plan for the deployme
 $ terraform plan
 ```
 
-Verify the details outputted by `plan` command. If all looks good to you then, then apply these configuration with `apply` command.
+Verify the details outputted by `plan` command. If all looks good to you, then apply these configuration with `apply` command.
 
 ```shell
 $ terraform apply
@@ -67,4 +67,3 @@ $ terraform fmt
 ```shell
 $ terraform validate
 ```
-
