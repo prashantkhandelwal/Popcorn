@@ -27,6 +27,10 @@ variable "vm_nic_name" {
   default = "popcronvm-nic"
 }
 
+variable "vm_ip_config_name" {
+  default = "ip_nic"
+}
+
 variable "vm_image_publisher_name" {
   default = "Canonical"
 }

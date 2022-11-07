@@ -66,7 +66,7 @@ resource "azurerm_network_interface" "popcronvmnic" {
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                          = "ip_nic"
+    name                          = var.vm_ip_config_name
     subnet_id                     = azurerm_subnet.popcornvmsubnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.popcornvmip.id
@@ -80,7 +80,7 @@ resource "azurerm_network_interface" "popcronvmnic" {
 }
 
 resource "azurerm_linux_virtual_machine" "popcorndbvm" {
-  name                = "popcorndbvm"
+  name                = var.vm_name
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
   size                = "Standard_B2s"
