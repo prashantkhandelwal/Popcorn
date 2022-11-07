@@ -7,6 +7,10 @@ variable "resource_group_name" {
   default = "popcorn-test"
 }
 
+resource "vm_name" {
+  default = "popcorndbvm"
+}
+
 variable "vm_vnet_name" {
   default = "popcornvm-vnet"
 }
