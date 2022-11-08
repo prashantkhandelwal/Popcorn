@@ -54,3 +54,19 @@ variable "vm_image_version" {
 variable "vm_user_name" {
   default = "popcorn"
 }
+
+variable "web_app_aspname" {
+  default = "popcorndb-asp"
+}
+
+variable "web_app_sku_name" {
+  default = "S1"
+}
+
+variable "web_app_os_type" {
+  default = "Windows"
+}
+
+variable "web_app_name"" {
+  default = "popcorndb"
+}

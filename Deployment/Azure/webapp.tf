@@ -1,13 +1,13 @@
 resource "azurerm_service_plan" "popcornasp" {
-  name                = "popcorndb-asp"
+  name                = var.web_app_aspname
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
-  sku_name            = "S1"
-  os_type             = "Windows"
+  sku_name            = var.web_app_sku_name
+  os_type             = var.web_app_os_type
 }
 
 resource "azurerm_windows_web_app" "popcornapp" {
-  name                = "popcorndb"
+  name                = var.web_app_name
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
   service_plan_id     = azurerm_service_plan.popcornasp.id
