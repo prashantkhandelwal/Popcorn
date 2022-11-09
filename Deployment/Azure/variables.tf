@@ -7,7 +7,9 @@ variable "resource_group_name" {
   default = "popcorn-test"
 }
 
-resource "vm_name" {
+# Variables for Virtual Machine - Hosting MongoDB
+
+variable "vm_name" {
   default = "popcorndbvm"
 }
 
@@ -67,6 +69,52 @@ variable "web_app_os_type" {
   default = "Windows"
 }
 
-variable "web_app_name"" {
+variable "web_app_name" {
   default = "popcorndb"
 }
+
+# End
+
+# Variables for App Service Plan - Web App
+
+variable "webapp_config_allow_backward_pagination" {
+  default = "true"
+}
+
+variable "webapp_config_environment" {
+  default = "Production"
+}
+
+variable "webapp_config_server_host" {
+  default = "127.0.0.1"
+}
+
+variable "webapp_config_database_name" {
+  default = "moviedb"
+}
+
+variable "webapp_config_db_port" {
+  default = 53535
+}
+
+variable "webapp_config_db_user" {
+  default = "popcorn"
+}
+
+variable "webapp_config_db_password" {
+  default = "password"
+}
+
+variable "webapp_config_include_page_total_count" {
+  default = "true"
+}
+
+variable "webapp_config_max_page_size" {
+  default = 50
+}
+
+variable "webapp_config_page_size" {
+  default = 20
+}
+
+# End

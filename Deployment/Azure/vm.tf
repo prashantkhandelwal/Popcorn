@@ -29,23 +29,26 @@ resource "azurerm_public_ip" "popcornvmip" {
   ]
 }
 
+resource "azurerm_network_security_rule" "vm_nsg_rules" {
+  for_each                    = local.nsgrules
+  name                        = each.key
+  direction                   = each.value.direction
+  access                      = each.value.access
+  priority                    = each.value.priority
+  protocol                    = each.value.protocol
+  source_port_range           = each.value.source_port_range
+  destination_port_range      = each.value.destination_port_range
+  source_address_prefix       = each.value.source_address_prefix
+  destination_address_prefix  = each.value.destination_address_prefix
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.popcornvmnsg.name
+}
+
 resource "azurerm_network_security_group" "popcornvmnsg" {
   name                = var.vm_nsg_name
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
-  security_rule {
-    access                     = "Allow"
-    description                = "Allow SSH connections to VM"
-    destination_address_prefix = "*"
-    destination_port_range     = "22"
-    direction                  = "Inbound"
-    name                       = "AllowSSH"
-    priority                   = 100
-    protocol                   = "Tcp"
-    source_address_prefix      = "*"
-    source_port_range          = "*"
-  }
   depends_on = [
     azurerm_resource_group.popcornrg
   ]
@@ -100,7 +103,7 @@ resource "azurerm_linux_virtual_machine" "popcorndbvm" {
   }
 
   source_image_reference {
-    publisher = var.vm_publisher_name
+    publisher = var.vm_image_publisher_name
     offer     = var.vm_image_offer
     sku       = var.vm_image_sku
     version   = var.vm_image_version

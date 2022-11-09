@@ -17,16 +17,16 @@ resource "azurerm_windows_web_app" "popcornapp" {
   }
 
   app_settings = {
-    "AllowBackwardPagination" = "true"
-    "ASPNETCORE_ENVIRONMENT"  = "Production"
-    "Database"                = "moviedb"
-    "IncludePageTotalCount"   = "true"
-    "MaxPageSize"             = 50
-    "PageSize"                = 20
-    "Password"                = "password"
-    "Port"                    = "53535"
-    "Server"                  = "127.0.0.1"
-    "User"                    = "popcorn"
+    "AllowBackwardPagination" = var.webapp_config_allow_backward_pagination
+    "ASPNETCORE_ENVIRONMENT"  = var.webapp_config_environment
+    "Database"                = var.webapp_config_database_name
+    "IncludePageTotalCount"   = var.webapp_config_include_page_total_count
+    "MaxPageSize"             = var.webapp_config_max_page_size
+    "PageSize"                = var.webapp_config_page_size
+    "Password"                = var.webapp_config_db_password
+    "Port"                    = var.webapp_config_db_port
+    "Server"                  = var.webapp_config_server_host
+    "User"                    = var.webapp_config_db_user
   }
 }
 
