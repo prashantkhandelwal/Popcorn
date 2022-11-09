@@ -9,6 +9,8 @@ namespace Popcorn.Models
     [GraphQLDescription("All details of the movie.")]
     public class Movie
     {
+        private DateTime? _releaseDate;
+
         [GraphQLType(typeof(Guid))]
         [BsonId]
         public object _id { get; set; }
@@ -107,7 +109,32 @@ namespace Popcorn.Models
 
         [BsonElement("release_date")]
         [GraphQLName("releasedate")]
-        public DateTime ReleaseDate { get; set; }
+        public DateTime? ReleaseDate
+        {
+            get
+            {
+                return _releaseDate;
+            }
+            set
+            {
+                DateTime dt;
+                if (DateTime.TryParse(value.ToString(), out dt))
+                {
+                    if (dt.ToString() == "01-01-1970 00:00:00")
+                    {
+                        _releaseDate = null;
+                    }
+                    else
+                    {
+                        _releaseDate = Convert.ToDateTime(value);
+                    }
+                }
+                else
+                {
+                    _releaseDate = null;
+                }
+            }
+        }
 
         [BsonElement("budget")]
         [GraphQLName("budget")]
