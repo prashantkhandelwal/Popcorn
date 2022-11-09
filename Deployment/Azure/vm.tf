@@ -1,5 +1,5 @@
 resource "azurerm_virtual_network" "popcornvmvnet" {
-  name                = "popcornvm-vnet"
+  name                = var.vm_vnet_name
   address_space       = ["10.0.0.0/16"]
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
@@ -9,7 +9,7 @@ resource "azurerm_virtual_network" "popcornvmvnet" {
 }
 
 resource "azurerm_subnet" "popcornvmsubnet" {
-  name                 = "popcornvm-subnet"
+  name                 = var.vm_subnet_name
   resource_group_name  = var.resource_group_name
   virtual_network_name = azurerm_virtual_network.popcornvmvnet.name
   address_prefixes     = ["10.0.2.0/24"]
@@ -20,7 +20,7 @@ resource "azurerm_subnet" "popcornvmsubnet" {
 }
 
 resource "azurerm_public_ip" "popcornvmip" {
-  name                = "popcornvmip"
+  name                = var.vm_public_ip_name
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
   allocation_method   = "Dynamic"
@@ -29,23 +29,26 @@ resource "azurerm_public_ip" "popcornvmip" {
   ]
 }
 
+resource "azurerm_network_security_rule" "vm_nsg_rules" {
+  for_each                    = local.nsgrules
+  name                        = each.key
+  direction                   = each.value.direction
+  access                      = each.value.access
+  priority                    = each.value.priority
+  protocol                    = each.value.protocol
+  source_port_range           = each.value.source_port_range
+  destination_port_range      = each.value.destination_port_range
+  source_address_prefix       = each.value.source_address_prefix
+  destination_address_prefix  = each.value.destination_address_prefix
+  resource_group_name         = var.resource_group_name
+  network_security_group_name = azurerm_network_security_group.popcornvmnsg.name
+}
+
 resource "azurerm_network_security_group" "popcornvmnsg" {
-  name                = "popcornvm-nsg"
+  name                = var.vm_nsg_name
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
-  security_rule {
-    access                     = "Allow"
-    description                = "Allow SSH connections to VM"
-    destination_address_prefix = "*"
-    destination_port_range     = "22"
-    direction                  = "Inbound"
-    name                       = "AllowSSH"
-    priority                   = 100
-    protocol                   = "Tcp"
-    source_address_prefix      = "*"
-    source_port_range          = "*"
-  }
   depends_on = [
     azurerm_resource_group.popcornrg
   ]
@@ -61,12 +64,12 @@ resource "azurerm_subnet_network_security_group_association" "popcornvm-nicnsg" 
 }
 
 resource "azurerm_network_interface" "popcronvmnic" {
-  name                = "popcronvm-nic"
+  name                = var.vm_nic_name
   location            = var.resource_group_location
   resource_group_name = var.resource_group_name
 
   ip_configuration {
-    name                          = "ip_nic"
+    name                          = var.vm_ip_config_name
     subnet_id                     = azurerm_subnet.popcornvmsubnet.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.popcornvmip.id
@@ -80,7 +83,7 @@ resource "azurerm_network_interface" "popcronvmnic" {
 }
 
 resource "azurerm_linux_virtual_machine" "popcorndbvm" {
-  name                = "popcorndbvm"
+  name                = var.vm_name
   resource_group_name = var.resource_group_name
   location            = var.resource_group_location
   size                = "Standard_B2s"
@@ -90,7 +93,7 @@ resource "azurerm_linux_virtual_machine" "popcorndbvm" {
   ]
 
   admin_ssh_key {
-    username   = "popcorn"
+    username   = var.vm_user_name
     public_key = file("key.pub")
   }
 
@@ -100,10 +103,10 @@ resource "azurerm_linux_virtual_machine" "popcorndbvm" {
   }
 
   source_image_reference {
-    publisher = "Canonical"
-    offer     = "0001-com-ubuntu-server-focal"
-    sku       = "20_04-lts-gen2"
-    version   = "latest"
+    publisher = var.vm_image_publisher_name
+    offer     = var.vm_image_offer
+    sku       = var.vm_image_sku
+    version   = var.vm_image_version
   }
 
   depends_on = [

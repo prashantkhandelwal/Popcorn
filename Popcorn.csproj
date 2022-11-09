@@ -25,6 +25,7 @@
   <ItemGroup>
     <None Include=".github\workflows\build-main.yml" />
     <None Include=".github\workflows\popcorndb.yml" />
+    <None Include="Popcorn.sln" />
   </ItemGroup>
 
   <ItemGroup>
