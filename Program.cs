@@ -6,6 +6,8 @@ using Microsoft.Extensions.FileProviders;
 using Path = System.IO.Path;
 using HotChocolate.Execution.Options;
 using HotChocolate.Types.Pagination;
+using Prometheus;
+using Popcorn.Monitoring;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,9 +38,16 @@ builder.Services.AddGraphQLServer()
     .AddMongoDbSorting()
     .SetRequestOptions(_ => new RequestExecutorOptions { ExecutionTimeout = TimeSpan.FromMinutes(1) });
 
+builder.Services.AddHealthChecks()
+    .AddCheck<PopcornHealthCheck>(nameof(PopcornHealthCheck))
+    .ForwardToPrometheus();
+
 var app = builder.Build();
 
 app.UseRouting();
+
+app.UseMetricServer();
+app.UseHttpMetrics();
 
 app.UseEndpoints(endpoints =>
 {

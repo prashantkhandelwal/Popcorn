@@ -1,6 +1,7 @@
 ﻿using HotChocolate.Data;
 using MongoDB.Driver;
 using Popcorn.Models;
+using Popcorn.Monitoring;
 
 namespace Popcorn.Repositories
 {
@@ -34,6 +35,9 @@ namespace Popcorn.Repositories
         public async Task<IExecutable<Movie>> GetMovieById(object? MovieId)
         {
             FilterDefinition<Movie>? filter = null;
+
+            PopcornCounter.CounterName = "popcorn_get_movies_by_id";
+            PopcornCounter.Count();
 
             if (MovieId != null)
             {
@@ -100,6 +104,9 @@ namespace Popcorn.Repositories
         public async Task<IExecutable<Credits>> GetMoviesDirectedBy(string DirectorName)
         {
             IMongoCollection<Credits> _collection = _database.GetCollection<Credits>("credits");
+
+            PopcornCounter.CounterName = "popcorn_get_movies_by_director";
+            PopcornCounter.Count();
 
             var filter = Builders<Credits>
                 .Filter
