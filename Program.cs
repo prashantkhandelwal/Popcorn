@@ -23,6 +23,8 @@ PagingOptions pagingOptions = new PagingOptions
     AllowBackwardPagination = builder.Configuration.GetValue<bool>("AllowBackwardPagination"),
 };
 
+bool enableMonitoring = builder.Configuration.GetValue<bool>("Monitoring");
+
 builder.Services.AddRouting();
 builder.Services.AddTransient<IMoviesRepository, MoviesRepository>();
 builder.Services.AddGraphQLServer()
@@ -46,8 +48,12 @@ var app = builder.Build();
 
 app.UseRouting();
 
-app.UseMetricServer();
-app.UseHttpMetrics();
+// Enable Prometheus Monitoring
+if (enableMonitoring)
+{
+    app.UseMetricServer();
+    app.UseHttpMetrics();
+}
 
 app.UseEndpoints(endpoints =>
 {
