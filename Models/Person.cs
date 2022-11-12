@@ -30,7 +30,7 @@ namespace Popcorn.Models
         public string Name { get; set; }
 
         [BsonElement("also_known_as")]
-        [GraphQLName("also_known_as")]
+        [GraphQLName("alsoknownas")]
         [GraphQLDescription("Alternate known names of the person.")]
         public string[] AlsoKnownAs { get; set; }
 
@@ -77,7 +77,7 @@ namespace Popcorn.Models
         [BsonElement("place_of_birth")]
         [GraphQLName("placeofbirth")]
         [GraphQLDescription("Place of birth of the person.")]
-        public string PlaceOfBirth { get; set; }
+        public string? PlaceOfBirth { get; set; }
 
         [BsonElement("deathday")]
         [GraphQLName("deathday")]
@@ -112,7 +112,7 @@ namespace Popcorn.Models
         [BsonElement("homepage")]
         [GraphQLName("homepage")]
         [GraphQLDescription("Website for the person.")]
-        public string Homepage { get; set; }
+        public string? Homepage { get; set; }
 
         [BsonElement("profile_path")]
         [GraphQLName("personimage")]
@@ -133,6 +133,11 @@ namespace Popcorn.Models
         [GraphQLName("popularity")]
         [GraphQLDescription("Popularity of the person.")]
         public double Popularity { get; set; }
+
+        [BsonElement("external_links")]
+        [GraphQLName("externallinks")]
+        [GraphQLDescription("External/Social links of the person.")]
+        public ExternalLinks? ExternalLinks { get; set; }
     }
 
     public class ExternalLinks
