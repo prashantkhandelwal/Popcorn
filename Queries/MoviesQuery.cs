@@ -64,6 +64,15 @@ namespace Popcorn.Queries
             return await _moviesRepository.GetMovieById(movieid).ConfigureAwait(false);
         }
 
+        [UsePaging]
+        [UseProjection]
+        [UseFiltering]
+        [GraphQLDescription("Search person on the basis of properties defined in \"Person\" schema.")]
+        public async Task<IExecutable<Person>> GetPerson(IMoviesRepository _moviesRepository, string personname = "")
+        {
+            return await _moviesRepository.SearchPerson(personname).ConfigureAwait(false);
+        }
+
         //TODO: Remove after testing.
         //[UseProjection]
         //[UseFiltering]

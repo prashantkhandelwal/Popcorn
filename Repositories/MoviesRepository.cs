@@ -18,7 +18,7 @@ namespace Popcorn.Repositories
             string? password = configuration["Password"];
             string? database = configuration["Database"];
 
-            if(string.IsNullOrEmpty(username))
+            if (string.IsNullOrEmpty(username))
             {
                 _connectionString = $"mongodb://{server}:{port}";
             }
@@ -167,6 +167,29 @@ namespace Popcorn.Repositories
             IMongoCollection<Keywords> _collection = _database.GetCollection<Keywords>("keywords");
 
             return await Task.FromResult(_collection.Find(c => c.Id == MovieId)
+                .AsExecutable())
+                .ConfigureAwait(false);
+        }
+
+        public async Task<IExecutable<Person>> SearchPerson(string PersonName = "")
+        {
+            IMongoCollection<Person> _collection = _database.GetCollection<Person>("person");
+
+            if (string.IsNullOrEmpty(PersonName))
+            {
+                var f = await Task.FromResult(
+                _collection
+                .AsExecutable())
+                .ConfigureAwait(false);
+
+                return await Task.FromResult(
+                _collection
+                .AsExecutable())
+                .ConfigureAwait(false);
+            }
+
+            return await Task.FromResult(
+                _collection.Find(m => m.Name.ToLowerInvariant().Contains(PersonName.ToLowerInvariant()))
                 .AsExecutable())
                 .ConfigureAwait(false);
         }
