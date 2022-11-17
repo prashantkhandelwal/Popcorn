@@ -109,6 +109,7 @@ namespace Popcorn.Models
 
         [BsonElement("release_date")]
         [GraphQLName("releasedate")]
+        [GraphQLDescription("Release date of the movie.")]
         public DateTime? ReleaseDate
         {
             get
@@ -138,26 +139,32 @@ namespace Popcorn.Models
 
         [BsonElement("budget")]
         [GraphQLName("budget")]
+        [GraphQLDescription("Total budget of the movie.")]
         public int Budget { get; set; }
 
         [BsonElement("revenue")]
         [GraphQLName("revenue")]
+        [GraphQLDescription("Total revenue of the movie.")]
         public long Revenue { get; set; }
 
         [BsonElement("status")]
         [GraphQLName("status")]
+        [GraphQLDescription("Current status of the movie.")]
         public string Status { get; set; }
 
         [BsonElement("video")]
         [GraphQLName("video")]
+        [GraphQLDescription("Movie has a other video source.")]
         public bool IsVideo { get; set; }
 
         [BsonElement("vote_average")]
         [GraphQLName("voteaverage")]
+        [GraphQLDescription("Average votes for the movie.")]
         public double VoteAverage { get; set; }
 
         [BsonElement("vote_count")]
         [GraphQLName("votecount")]
+        [GraphQLDescription("Trotal votes for the movie.")]
         public int VoteCount { get; set; }
 
     }

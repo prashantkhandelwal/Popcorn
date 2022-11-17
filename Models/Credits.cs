@@ -143,7 +143,7 @@ namespace Popcorn.Models
 
         [BsonElement("popularity")]
         [GraphQLName("popularity")]
+        [GraphQLDescription("Popularity of the character.")]
         public double Popularity { get; set; }
-
     }
 }
