@@ -70,7 +70,7 @@ variable "web_app_os_type" {
 }
 
 variable "web_app_name" {
-  default = "popcorndb"
+  default = "popcorndb123"
 }
 
 # End

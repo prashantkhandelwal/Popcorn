@@ -4,6 +4,10 @@ resource "azurerm_service_plan" "popcornasp" {
   location            = var.resource_group_location
   sku_name            = var.web_app_sku_name
   os_type             = var.web_app_os_type
+
+  depends_on = [
+    azurerm_resource_group.popcornrg
+  ]
 }
 
 resource "azurerm_windows_web_app" "popcornapp" {

@@ -82,6 +82,11 @@ resource "azurerm_network_interface" "popcronvmnic" {
   ]
 }
 
+resource "tls_private_key" "popcornssh" {
+  algorithm = "RSA"
+  rsa_bits  = 4096
+}
+
 resource "azurerm_linux_virtual_machine" "popcorndbvm" {
   name                = var.vm_name
   resource_group_name = var.resource_group_name
@@ -94,7 +99,7 @@ resource "azurerm_linux_virtual_machine" "popcorndbvm" {
 
   admin_ssh_key {
     username   = var.vm_user_name
-    public_key = file("key.pub")
+    public_key = tls_private_key.popcornssh.public_key_openssh
   }
 
   os_disk {
