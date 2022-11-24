@@ -19,6 +19,7 @@
 
   <ItemGroup>
     <Folder Include="Deployment\Azure\" />
+    <Folder Include="Postman\" />
     <Folder Include="Web\img\" />
   </ItemGroup>
 
