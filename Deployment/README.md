@@ -47,13 +47,36 @@ $ terraform init
 After the initialization is completed, the next step is to plan for the deployment. This command will not create any resource in Azure. It will only list which resources are going to be created, changed or destroyed.
 
 ```shell
-$ terraform plan
+$ terraform plan -out main.tfplan
 ```
 
 Verify the details outputted by `plan` command. If all looks good to you, then apply these configuration with `apply` command.
 
 ```shell
-$ terraform apply
+$ terraform apply main.tfplan
+```
+
+Once the `apply` command finishes the execution, you can see the 2 output variables in the end of the output. They are named `public_ip_address` and `tls_private_key` and will show IP address of the VM and private key which allows you to connect to the VM respectively.
+You can't see the private key in the output as it is marked as sensitive.'
+
+# Get IP address and SSH Key of the VM
+
+Get the IP address of the VM.
+```shell
+$ terraform outpur public_ip_address
+```
+
+To get the private key of the VM, we have to save it in the `.ssh` folder (Windows). If you try to save the private key in another folder by executing the below command then you also have to make sure that you setup right permissions to the key file or else you will not be able to connect to the VM.
+```shell
+$ terraform output -raw tls_private_key > id_rsa
+```
+
+You can rename `id_rsa` in the above command as you like. The `.ssh` folder can be found in Windows at `C:\Users\<USERNAME>\.ssh`
+
+Once you save the key in the above path, you should now be able to connect to the VM by executing the below command.
+
+```shell
+$ ssh -i C:\Users\<USERNAME>\.ssh\id_rsa popcorn@<public_ip_address>
 ```
 
 # Other Terrafrom Commands
