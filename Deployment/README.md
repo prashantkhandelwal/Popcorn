@@ -32,9 +32,12 @@ Now Azure CLI is configured to use with your specified Azure subscription.
 [Download Terraform](https://www.terraform.io/downloads) from the official website and add it to the system environment path. No other configuration needed on Terraform installation side. 
 
 # Files
-- main.tf - Contains the resource group name
+- main.tf - Contains the resource group name.
 - vm.tf - Creates Ubuntu Virtual Machine which will host MongoDB.
 - providers.tf - Providers used in Terraform.
+- output.tf - Contains the variables for listing IP address of VM and SSH key after the deployment is complete. Check the `output` command below to use it.
+- rules.tf - List of network security group rules. These rules are used in `vm.tf`.
+- webapp.tf - Create App Service Plan and Web App resource including app settings and site configs. Change values accordingly in the `variables.tf` file.
 - variables.tf - Contains the actual values for all the resources. Edit this file if you want to change anything in your deployment.
 
 # Deployment Commands
@@ -58,6 +61,12 @@ $ terraform apply main.tfplan
 
 Once the `apply` command finishes the execution, you can see the 2 output variables in the end of the output. They are named `public_ip_address` and `tls_private_key` and will show IP address of the VM and private key which allows you to connect to the VM respectively.
 You can't see the private key in the output as it is marked as sensitive.'
+
+If you wish to destroy/delete all the resources then use the below command.
+
+```shell
+$ terraform destroy
+```
 
 # Get IP address and SSH Key of the VM
 
