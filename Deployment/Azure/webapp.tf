@@ -32,5 +32,10 @@ resource "azurerm_windows_web_app" "popcornapp" {
     "Server"                  = var.webapp_config_server_host
     "User"                    = var.webapp_config_db_user
   }
+
+  depends_on = [
+    azurerm_service_plan.popcornasp
+  ]
+
 }
 
